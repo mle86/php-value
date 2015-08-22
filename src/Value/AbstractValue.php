@@ -122,5 +122,41 @@ abstract class AbstractValue
 		}
 	}
 
+
+	/**
+	 * Replaces a value (by-reference) with an instance wrapping that value.
+	 * (It also returns the new wrapper object.)
+	 * This means of course that the call will fail with
+	 * an InvalidArgumentException if the input value fails the subclass'
+	 * IsValid check.  If the value already is an instance, it won't be replaced.
+	 *
+	 * @param mixed|static $value
+	 * @return static
+	 */
+	final public static function Wrap (&$value) {
+		if ($value instanceof static) {
+			/* While re-wrapping would work, it's a waste of resources as it results in two identical objects.
+			 * Because the instances are immutable, we can just leave it as it is.  */
+			return $value;
+		} else {
+			return ($value = new static ($value));
+		}
+	}
+
+	/**
+	 * Like Wrap, but won't change NULL values.
+	 *
+	 * @param mixed|static|NULL $value
+	 * @return static|NULL
+	 */
+	final public static function WrapOrNull (&$value) {
+		if ($value === null) {
+			// ignore
+			return $value;
+		} else {
+			return static::Wrap($value);
+		}
+	}
+
 }
 
