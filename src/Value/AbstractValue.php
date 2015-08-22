@@ -28,6 +28,7 @@ namespace mle86\Value;
  * @author Maximilian Eul
  */
 abstract class AbstractValue
+	implements Value
 {
 
 	/**
