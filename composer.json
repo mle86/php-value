@@ -1,0 +1,14 @@
+{
+	"name": "mle86/value",
+	"description": "",
+
+	"autoload": {
+		"psr-4": {
+			"mle86\\Value\\": "src/Value/"
+		}
+	},
+
+	"require": {
+		"php": ">=5.4.0"
+	}
+}
