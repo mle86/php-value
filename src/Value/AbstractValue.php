@@ -99,7 +99,7 @@ abstract class AbstractValue
 	 * @return bool
 	 */
 	public static function IsValid (/** @noinspection PhpUnusedParameterInspection */ $test_value) {
-		throw new ErrorException (get_called_class() . "::IsValid not implemented!");
+		throw new NotImplementedException (get_called_class() . "::IsValid not implemented!");
 	}
 
 
