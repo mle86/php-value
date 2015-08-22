@@ -82,6 +82,27 @@ abstract class AbstractValue
 	}
 
 
+	/** @noinspection PhpDocMissingThrowsInspection */
+	/**
+	 * Checks the validity of a raw value.  If this method returns true,
+	 * a new object can be instantiated with the same value.
+	 * Implement this in every subclass!
+	 *
+	 * This method stub is here because static methods cannot be declared abstract.
+	 * It ensures that instantiating a sub-class without this method will result
+	 * in an exception, not a PHP error about a missing method.
+	 *
+	 * Always include an 'if ($test_value instanceof static) { return true; }'
+	 * check, as already-wrapped values are always considered valid!
+	 *
+	 * @param mixed|static $test_value
+	 * @return bool
+	 */
+	public static function IsValid (/** @noinspection PhpUnusedParameterInspection */ $test_value) {
+		throw new ErrorException (get_called_class() . "::IsValid not implemented!");
+	}
+
+
 	/**
 	 * This method performs an equality check on other instances or raw values.
 	 * Objects are considered equal if and only if they are instances of the same
