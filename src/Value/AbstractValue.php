@@ -158,5 +158,56 @@ abstract class AbstractValue
 		}
 	}
 
+
+	/**
+	 * Will replace all values in an array with instances.
+	 * The array will only be altered (by-reference) if all its values are valid.
+	 * (It also returns the altered array.)
+	 * Array keys will be preserved.
+	 *
+	 * @param array<mixed|static> $array
+	 * @return static[]
+	 */
+	final public static function WrapArray (array &$array) {
+		$array_copy = $array;
+		foreach ($array_copy as &$value) {
+			if ($value instanceof static) {
+				// See comment in Wrap() -- we don't have to re-wrap existing instances.
+			} else {
+				$value = new static ($value);
+			}
+		}
+
+		// No exception so far? Ok, now save the array and return it:
+		$array = $array_copy;
+		return $array;
+	}
+
+	/**
+	 * Will replace all non-`NULL` values in an array with instances.
+	 * The array will only be changed (by-reference) if all its values are valid (or `NULL`).
+	 * (It also returns the altered array.)
+	 * Array keys will be preserved.
+	 *
+	 * @param array<mixed|static|NULL> $array
+	 * @return array<static|NULL>
+	 */
+	final public static function WrapOrNullArray (array &$array) {
+		$array_copy = $array;
+		foreach ($array_copy as &$value) {
+			if ($value instanceof static) {
+				// See comment in Wrap() -- we don't have to re-wrap existing instances.
+			} elseif ($value === null) {
+				// ignore
+			} else {
+				$value = new static ($value);
+			}
+		}
+
+		// No exception so far? Ok, now save the array and return it:
+		$array = $array_copy;
+		return $array;
+	}
+
 }
 
