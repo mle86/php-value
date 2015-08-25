@@ -1,6 +1,14 @@
 {
 	"name": "mle86/value",
-	"description": "",
+	"type": "library",
+	"description": "A base class for immutable single-value-wrapper classes",
+	"license": "MIT",
+
+	"authors": [ {
+		"name": "Maximilian Eul",
+		"email": "maximilian@eul.cc",
+		"homepage": "https://github.com/mle86/php-value"
+	} ],
 
 	"autoload": {
 		"psr-4": {

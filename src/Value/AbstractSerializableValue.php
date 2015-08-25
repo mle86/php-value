@@ -7,6 +7,7 @@ namespace mle86\Value;
  * for the Value objects.  It implements the PHP 5.4 JsonSerializable interface.
  *
  * @author Maximilian Eul
+ * @link https://github.com/mle86/php-value
  */
 abstract class AbstractSerializableValue
 	extends AbstractValue

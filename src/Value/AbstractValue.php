@@ -26,6 +26,7 @@ namespace mle86\Value;
  * representations of the value).
  *
  * @author Maximilian Eul
+ * @link https://github.com/mle86/php-value
  */
 abstract class AbstractValue
 	implements Value

@@ -12,6 +12,7 @@ namespace mle86\Value;
  * in an interface.
  *
  * @author Maximilian Eul
+ * @link https://github.com/mle86/php-value
  */
 interface Value {
 
