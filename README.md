@@ -1,7 +1,10 @@
 # php-value
 
 This PHP library provides a simple base class for Immutable Value Objects.
-Those are objects which wrap exactly one value, cannot be changed in any way, have no additional state and carry some validation logic in the constructor.
+Those are objects which wrap exactly one value,
+cannot be changed in any way,
+have no additional state,
+and carry some validation logic in the constructor.
 
 It is released under the [MIT License](http://opensource.org/licenses/MIT).
 
@@ -9,17 +12,21 @@ It is released under the [MIT License](http://opensource.org/licenses/MIT).
 # Simple use case:
 
 ```php
-class OddNumber  extends \mle86\Value\AbstractValue {
+class OddNumber
+	extends \mle86\Value\AbstractValue
+{
+
+    // The base class requires this boolean test method:
     public static function IsValid ($input) {
-        // The base class requires this boolean method.
         return (is_int($input) && ($input % 2) === 1);
     }
+
     // Nothing else is needed.
 }
 
 function my_function (OddNumber $odd_argument) {
     /* No further validation of $odd_argument is necessary in this function,
-     * it's guaranteed to be an odd number. */
+     * it's guaranteed to contain an odd number. */
     print "Got an odd number here: " . $odd_argument->value();
 }
 
