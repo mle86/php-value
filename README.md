@@ -30,8 +30,10 @@ function my_function (OddNumber $odd_argument) {
     print "Got an odd number here: " . $odd_argument->value();
 }
 
-$odd1 = new OddNumber (61);  // works as expected, $odd1->value() will return 61
-$odd2 = new OddNumber (40);  // throws an InvalidArgumentException
+$odd1 = new OddNumber(61);       // works as expected, $odd1->value() will return 61
+$odd2 = new OddNumber(40);       // throws an InvalidArgumentException
+$odd3 = new OddNumber("string"); // throws an InvalidArgumentException
+$odd4 = new OddNumber(null);     // throws an InvalidArgumentException
 ```
 
 
