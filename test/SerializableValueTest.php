@@ -3,7 +3,7 @@ namespace mle86\Value\Tests;
 
 use mle86\Value\AbstractSerializableValue;
 use mle86\Value\Value;
-require_once 'aux/TestSWrapper6.php';
+require_once 'helpers/TestSWrapper6.php';
 
 
 /**

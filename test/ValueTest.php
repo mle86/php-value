@@ -3,9 +3,9 @@ namespace mle86\Value\Tests;
 
 use mle86\Value\AbstractValue;
 use mle86\Value\Value;
-require_once 'aux/TestWrapper4.php';
-require_once 'aux/TestWrapper9.php';
-require_once 'aux/ExtTestWrapper4.php';
+require_once 'helpers/TestWrapper4.php';
+require_once 'helpers/TestWrapper9.php';
+require_once 'helpers/ExtTestWrapper4.php';
 
 
 /**
