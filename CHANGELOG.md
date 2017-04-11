@@ -1,3 +1,6 @@
+v1.0.3 (2017-04)
+* prevent magic properties
+
 v1.0.2 (2017-04-11)
 * prevent double constructor call
 

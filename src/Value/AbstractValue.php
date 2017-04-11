@@ -225,5 +225,17 @@ abstract class AbstractValue
 		return $array;
 	}
 
+	/**
+	 * Immutable objects cannot have any magic properties,
+	 * as they would be public and therefore changeable.
+	 * This method prevents setting any magic methods.
+	 *
+	 * @throws NoMagicPropertiesException  (always)
+	 * @internal
+	 */
+	final public function __set ($name, $value) {
+		throw new NoMagicPropertiesException ("immutable objects have no magic properties");
+	}
+
 }
 
