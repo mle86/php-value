@@ -51,6 +51,15 @@ abstract class AbstractValue
 
 
 	/**
+	 * This variable is used to prevent double constructor calls,
+	 * which could otherwise be used to change the wrapped value.
+	 *
+	 * @var bool
+	 */
+	private $is_set = false;
+
+
+	/**
 	 * The constructor uses the subclass' IsValid method to test its input
 	 * argument.  Valid values are stored in the new instance,  invalid values
 	 * cause an InvalidArgumentException to be thrown.
@@ -65,6 +74,11 @@ abstract class AbstractValue
 	 * @param mixed|static $raw_value
 	 */
 	public function __construct ($raw_value) {
+
+		if ($this->is_set) {
+			throw new DoubleConstructorCallException ("double constructor call is not allowed");
+		}
+		$this->is_set = true;
 
 		if ($raw_value instanceof static) {
 			/* Re-wrapping an existing instance works,
