@@ -88,7 +88,7 @@ of external values without wrapping them in an instance.
 
 	The constructor uses the subclass' `IsValid` method to test its input argument.
 	Valid values are stored in the new instance, invalid values cause an `InvalidArgumentException` to be thrown.
-	Other instance of the same class are always considered valid (*re-wrapping*).
+	Other instances of the same class are always considered valid (*re-wrapping*).
 
 * `public static function IsValid ($test_value);`
 
@@ -152,5 +152,5 @@ An empty extension of PHP's `InvalidArgumentException`.
 
 ## NotImplementedException
 
-An empy extension of PHP's `ErrorException`.
+An empty extension of PHP's `ErrorException`.
 
