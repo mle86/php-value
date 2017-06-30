@@ -84,45 +84,45 @@ subclasses must implement.  It is a class method to allow validity checks
 of external values without wrapping them in an instance.
 
 
-* <code>public function \_\_construct ($raw\_value)</code>
+* <code>public function <b>\_\_construct</b> ($raw\_value)</code>
 
 	The constructor uses the subclass' `IsValid` method to test its input argument.
 	Valid values are stored in the new instance, invalid values cause an `InvalidArgumentException` to be thrown.
 	Other instances of the same class are always considered valid (*re-wrapping*).
 
-* <code>public static function IsValid ($test\_value)</code>
+* <code>public static function <b>IsValid</b> ($test\_value)</code>
 
 	Checks the validity of a raw value. If it returns true, a new object can be instantiated with the same value.
 	Implement this in every subclass!
 	In the base class implementation, it simply throws a `NotImplementedException`.
 
-* <code>final public function value ()</code>
+* <code>final public function <b>value</b> ()</code>
 
 	Returns the object's wrapped initializer value.
 
-* <code>final public function equals ($test\_value)</code>
+* <code>final public function <b>equals</b> ($test\_value)</code>
 
 	This method performs an equality check on other instances or raw values.
 	Objects are considered equal if and only if they are instances of the same subclass and carry the same `value()`.
 	All other values are considered equal if and only if they are identical (`===`) to the current objects's `value()`.
 
-* <code>final public static function Wrap (&$value)</code>
+* <code>final public static function <b>Wrap</b> (&$value)</code>
 
 	Replaces a value (by-reference) with instance wrapping that value.
 	This means of course that the call will fail with an `InvalidArgumentException` if the input value fails the subclass' `IsValid` check.
 	If the value already is an instance, it won't be replaced.
 
-* <code>final public static function WrapOrNull (&$value)</code>
+* <code>final public static function <b>WrapOrNull</b> (&$value)</code>
 
 	Like `Wrap()`, but won't change `NULL` values.
 
-* <code>final public static function WrapArray (array &$array)</code>
+* <code>final public static function <b>WrapArray</b> (array &$array)</code>
 
 	Will replace all values in an array with instances.
 	The array will only be altered (by-reference) if all its values are valid.
 	Array keys will be preserved.
 
-* <code>final public static function WrapOrNullArray (array &$array)</code>
+* <code>final public static function <b>WrapOrNullArray</b> (array &$array)</code>
 
 	Will replace all non-`NULL` values in an array with instances.
 	The array will only be changed (by-reference) if all its values are valid (or `NULL`).
@@ -134,15 +134,15 @@ of external values without wrapping them in an instance.
 This extension of `AbstractValue` provides easy serializability for the Value objects.
 It implements the PHP 5.4 [JsonSerializable](https://php.net/manual/class.jsonserializable.php) interface.
 
-* <code>public function \_\_toString ()</code>
+* <code>public function <b>\_\_toString</b> ()</code>
 
-	Returns the wrapped value --
+	Returns the wrapped value –
 	like `value()`, but with an explicit `(string)` typecast.
 	This allows string concatenation of Value objects.
 
-* <code>public function jsonSerialize ()</code>
+* <code>public function <b>jsonSerialize</b> ()</code>
 
-	Returns the wrapped value --
+	Returns the wrapped value –
 	like `value()`.
 	This enables [json_encode()](https://secure.php.net/json_encode) to encode the Value object.
 
