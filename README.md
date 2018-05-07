@@ -1,5 +1,8 @@
 # php-value
 
+[![Build Status](https://travis-ci.org/mle86/php-value.svg?branch=master)](https://travis-ci.org/mle86/php-value)
+[![Coverage Status](https://coveralls.io/repos/github/mle86/php-value/badge.svg?branch=master)](https://coveralls.io/github/mle86/php-value?branch=master)
+
 This PHP library provides a simple base class for Immutable Value Objects.
 Those are objects which wrap exactly one value,
 cannot be changed in any way,
