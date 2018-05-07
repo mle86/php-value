@@ -3,6 +3,8 @@ namespace mle86\Value\Tests;
 
 use mle86\Value\AbstractValue;
 use mle86\Value\Value;
+use PHPUnit\Framework\TestCase;
+
 require_once 'helpers/TestWrapper4.php';
 
 
@@ -11,7 +13,7 @@ require_once 'helpers/TestWrapper4.php';
  * cannot be used to change the stored value.
  */
 class DoubleConstructorCallTest
-	extends \PHPUnit_Framework_TestCase
+	extends TestCase
 {
 
 	const VALID_VALUE1 = "41111";

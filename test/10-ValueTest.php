@@ -3,6 +3,9 @@ namespace mle86\Value\Tests;
 
 use mle86\Value\AbstractValue;
 use mle86\Value\Value;
+use PHPUnit\Framework\Error\Error;
+use PHPUnit\Framework\TestCase;
+
 require_once 'helpers/TestWrapper4.php';
 require_once 'helpers/TestWrapper9.php';
 require_once 'helpers/ExtTestWrapper4.php';
@@ -14,7 +17,7 @@ require_once 'helpers/ExtTestWrapper4.php';
  * and their default methods inherited from AbstractValue.
  */
 class ValueTest
-	extends \PHPUnit_Framework_TestCase
+	extends TestCase
 {
 
 	/** @var TestWrapper4 */
@@ -84,9 +87,9 @@ class ValueTest
 	 *
 	 * @depends testConstructor
 	 * @dataProvider invalidInputs
-	 * @expectedException \InvalidArgumentException
 	 */
 	public function testInvalidInitializer ($initializer) {
+	    $this->expectException(\InvalidArgumentException::class);
 		new TestWrapper4 ($initializer);
 	}
 
@@ -97,9 +100,9 @@ class ValueTest
 	 * @depends testConstructor
 	 * @depends testConstructor9
 	 * @dataProvider validInputs9
-	 * @expectedException \InvalidArgumentException
 	 */
 	public function testCrossInvalidInitializer ($initializer) {
+		$this->expectException(\InvalidArgumentException::class);
 		new TestWrapper4 ($initializer);
 	}
 
@@ -150,9 +153,9 @@ class ValueTest
 
 	/**
 	 * @depends testEquals
-	 * @expectedException \PHPUnit_Framework_Error
 	 */
 	public function testBuiltinEqualsZero () {
+		$this->expectException(Error::class);
 		$this->assertFalse((self::$tw1 == 0 || 0 == self::$tw1),
 			"wrapper is considered equal to zero by builtin== !");
 	}
@@ -217,20 +220,20 @@ class ValueTest
 	/**
 	 * @depends testWrap
 	 * @dataProvider invalidInputs
-	 * @expectedException \InvalidArgumentException
 	 */
 	public function testWrapInvalid ($initializer) {
 		$v = $initializer;
+		$this->expectException(\InvalidArgumentException::class);
 		TestWrapper4::Wrap($v);
 	}
 
 	/**
 	 * @depends testWrapInvalid
 	 * @dataProvider validInputs9
-	 * @expectedException \InvalidArgumentException
 	 */
 	public function testWrapCrossInvalid ($initializer) {
 		$v = $initializer;
+		$this->expectException(\InvalidArgumentException::class);
 		TestWrapper4::Wrap($v);
 	}
 
@@ -254,9 +257,9 @@ class ValueTest
 	 * Wrapping an instance of a different class must fail.
 	 *
 	 * @depends testRewrap
-	 * @expectedException \InvalidArgumentException
 	 */
 	public function testRewrapInvalid (TestWrapper9 $tx) {
+		$this->expectException(\InvalidArgumentException::class);
 		TestWrapper4::Wrap($tx);
 	}
 
@@ -442,11 +445,11 @@ class ValueTest
 	 * @depends testExtendedObject
 	 * @depends testExtendedBuiltinEquals
 	 * @depends testBuiltinEqualsZero
-	 * @expectedException \PHPUnit_Framework_Error
 	 */
 	public function testExtendedBuiltinEqualsZero ($additional_property, ExtTestWrapper4 $ew) {
 		$ew->set_additional_property($additional_property);
 
+		$this->expectException(Error::class);
 		$this->assertFalse(($ew == 0 || 0 == $ew),
 			"Extended wrapper object is considered equal to zero by builtin== !");
 	}

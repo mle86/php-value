@@ -3,6 +3,8 @@ namespace mle86\Value\Tests;
 
 use mle86\Value\AbstractValue;
 use mle86\Value\Value;
+use PHPUnit\Framework\TestCase;
+
 require_once 'helpers/TestWrapper4.php';
 
 
@@ -15,7 +17,7 @@ require_once 'helpers/TestWrapper4.php';
  * but we cannot really prevent that.
  */
 class MagicPropertiesTest
-	extends \PHPUnit_Framework_TestCase
+	extends TestCase
 {
 
 	const VALID_VALUE = "41111";

@@ -2,6 +2,8 @@
 namespace mle86\Value\Tests;
 
 use mle86\Value\AbstractValue;
+use mle86\Value\NotImplementedException;
+use PHPUnit\Framework\TestCase;
 
 
 /**
@@ -11,13 +13,11 @@ class BadTestWrapper  extends AbstractValue { }
 
 
 class IncompleteClassTest
-	extends \PHPUnit_Framework_TestCase
+	extends TestCase
 {
 
-	/**
-	 * @expectedException \mle86\Value\NotImplementedException
-	 */
 	public function testConstructor () {
+	    $this->expectException(NotImplementedException::class);
 		new BadTestWrapper ("1");
 	}
 
