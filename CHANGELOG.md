@@ -1,3 +1,6 @@
+v1.1.1 (2018-09-10)
+* package cleanup
+
 v1.1.0 (2018-05-07)
 * Travis CI
 * PHPUnit 6
