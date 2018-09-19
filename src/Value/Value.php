@@ -1,6 +1,6 @@
 <?php
-namespace mle86\Value;
 
+namespace mle86\Value;
 
 /**
  * The interface of all value classes,
@@ -14,11 +14,11 @@ namespace mle86\Value;
  * @author Maximilian Eul
  * @link https://github.com/mle86/php-value
  */
-interface Value {
+interface Value
+{
 
-	public function value ();
+    public function value();
 
-	public function __construct ($raw_value);
+    public function __construct($raw_value);
 
 }
-

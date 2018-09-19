@@ -13,82 +13,86 @@ require_once 'helpers/TestSWrapper6.php';
  * Tests a simple AbstractSerializableValue implementation
  * and its default methods inherited from AbstractSerializableValue.
  */
-class SerializableValueTest
-	extends TestCase
+class SerializableValueTest extends TestCase
 {
 
-	const VALID_INPUT   = "61234";
-	const INVALID_INPUT = "61234 ";
-	const VALID_INPUT2  = "69999";
+    const VALID_INPUT   = "61234";
+    const INVALID_INPUT = "61234 ";
+    const VALID_INPUT2  = "69999";
 
 
-	public function testClassExists () {
-		$class     = 'mle86\\Value\\AbstractValue';
-		$interface = 'mle86\\Value\\Value';
+    public function testClassExists()
+    {
+        $class     = 'mle86\\Value\\AbstractValue';
+        $interface = 'mle86\\Value\\Value';
 
-		$this->assertTrue(class_exists($class),
-			"Class {$class} not found!");
-		$this->assertTrue(is_a($class, $interface, true),
-			"Class {$class} does not implement the {$interface} interface!");
-	}
+        $this->assertTrue(class_exists($class),
+            "Class {$class} not found!");
+        $this->assertTrue(is_a($class, $interface, true),
+            "Class {$class} does not implement the {$interface} interface!");
+    }
 
-	/**
-	 * @depends testClassExists
-	 * @return AbstractSerializableValue
-	 */
-	public function testInstance () {
-		$tw = new TestSWrapper6 (self::VALID_INPUT);
+    /**
+     * @depends testClassExists
+     * @return AbstractSerializableValue
+     */
+    public function testInstance()
+    {
+        $tw = new TestSWrapper6(self::VALID_INPUT);
 
-		$this->assertTrue(($tw && $tw instanceof TestSWrapper6 && $tw instanceof AbstractSerializableValue && $tw instanceof Value),
-			"new TestSWrapper6() did not result in a valid object");
+        $this->assertTrue(($tw && $tw instanceof TestSWrapper6 && $tw instanceof AbstractSerializableValue && $tw instanceof Value),
+            "new TestSWrapper6() did not result in a valid object");
 
-		return $tw;
-	}
+        return $tw;
+    }
 
-	/**
-	 * @depends testInstance
-	 */
-	public function testString (AbstractSerializableValue $tw) {
-		$s        = "<{$tw}>";
-		$expected = "<" . self::VALID_INPUT . ">";
+    /**
+     * @depends testInstance
+     */
+    public function testString(AbstractSerializableValue $tw)
+    {
+        $s        = "<{$tw}>";
+        $expected = "<" . self::VALID_INPUT . ">";
 
-		$this->assertSame($expected, $s,
-			"serializable wrapper has a __toString() method, but returned wrong value!");
-	}
+        $this->assertSame($expected, $s,
+            "serializable wrapper has a __toString() method, but returned wrong value!");
+    }
 
-	/**
-	 * @depends testInstance
-	 */
-	public function testJson (AbstractSerializableValue $tw) {
-		$j        = json_decode(json_encode( array($tw         ) ));
-		$expected =                          array($tw->value());
+    /**
+     * @depends testInstance
+     */
+    public function testJson(AbstractSerializableValue $tw)
+    {
+        $j        = json_decode(json_encode(array($tw)));
+        $expected = array($tw->value());
 
-		$this->assertSame($expected, $j,
-			"serializable wrapper has a jsonSerialize() method, but returned wrong value!");
-	}
+        $this->assertSame($expected, $j,
+            "serializable wrapper has a jsonSerialize() method, but returned wrong value!");
+    }
 
-	/**
-	 * @depends testInstance
-	 * @depends testString
-	 */
-	public function testBuiltinEquals (AbstractSerializableValue $tw) {
-		$this->assertTrue(($tw == self::VALID_INPUT),
-			"serializable wrapper failed builtin== equality check with own initializer!");
-		$this->assertFalse(($tw == self::VALID_INPUT2),
-			"serializable wrapper considered other valid initializer as ==equal !");
-		$this->assertFalse(($tw == self::INVALID_INPUT),
-			"serializable wrapper considered other, invalid initializer as ==equal !");
-	}
+    /**
+     * @depends testInstance
+     * @depends testString
+     */
+    public function testBuiltinEquals(AbstractSerializableValue $tw)
+    {
+        $this->assertTrue(($tw == self::VALID_INPUT),
+            "serializable wrapper failed builtin== equality check with own initializer!");
+        $this->assertFalse(($tw == self::VALID_INPUT2),
+            "serializable wrapper considered other valid initializer as ==equal !");
+        $this->assertFalse(($tw == self::INVALID_INPUT),
+            "serializable wrapper considered other, invalid initializer as ==equal !");
+    }
 
-	/**
-	 * @depends testInstance
-	 * @depends testBuiltinEquals
-	 */
-	public function testBuiltinEqualsZero (AbstractSerializableValue $tw) {
-		$this->expectException(Error::class);
-		$this->assertFalse(($tw == 0),
-			"serializable wrapper considered zero as ==equal !");
-	}
+    /**
+     * @depends testInstance
+     * @depends testBuiltinEquals
+     */
+    public function testBuiltinEqualsZero(AbstractSerializableValue $tw)
+    {
+        $this->expectException(Error::class);
+        $this->assertFalse(($tw == 0),
+            "serializable wrapper considered zero as ==equal !");
+    }
 
 }
-
