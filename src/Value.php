@@ -19,6 +19,6 @@ interface Value
 
     public function value();
 
-    public function __construct($raw_value);
+    public function __construct($rawValue);
 
 }

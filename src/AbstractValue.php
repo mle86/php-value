@@ -56,7 +56,7 @@ abstract class AbstractValue implements Value
      *
      * @var bool
      */
-    private $is_set = false;
+    private $isSet = false;
 
 
     /**
@@ -71,28 +71,28 @@ abstract class AbstractValue implements Value
      * Since subclasses cannot directly access the $value property,
      * they should always call this superconstructor to do the assignment.
      *
-     * @param mixed|static $raw_value
+     * @param mixed|static $rawValue
      */
-    public function __construct($raw_value)
+    public function __construct($rawValue)
     {
 
-        if ($this->is_set) {
+        if ($this->isSet) {
             throw new DoubleConstructorCallException("double constructor call is not allowed");
         }
-        $this->is_set = true;
+        $this->isSet = true;
 
-        if ($raw_value instanceof static) {
+        if ($rawValue instanceof static) {
             /* Re-wrapping an existing instance works,
              * the contained value has already passed the IsValid check once.  */
-            $this->value = $raw_value->value();
+            $this->value = $rawValue->value();
 
-        } elseif (static::IsValid($raw_value)) {
-            $this->value = $raw_value;
+        } elseif (static::IsValid($rawValue)) {
+            $this->value = $rawValue;
 
         } else {
-            $input = (is_string($raw_value) || is_int($raw_value) || is_float($raw_value))
-                ? "'{$raw_value}'"
-                : gettype($raw_value);
+            $input = (is_string($rawValue) || is_int($rawValue) || is_float($rawValue))
+                ? "'{$rawValue}'"
+                : gettype($rawValue);
 
             throw new InvalidArgumentException("not a valid " . get_called_class() . ": {$input}");
         }
@@ -109,15 +109,15 @@ abstract class AbstractValue implements Value
      * It ensures that instantiating a sub-class without this method will result
      * in an exception, not a PHP error about a missing method.
      *
-     * Always include an 'if ($test_value instanceof static) { return true; }'
+     * Always include an 'if ($testValue instanceof static) { return true; }'
      * check, as already-wrapped values are always considered valid!
      *
-     * @param mixed|static $test_value
+     * @param mixed|static $testValue
      * @return bool
      */
     public static function IsValid(
         /** @noinspection PhpUnusedParameterInspection */
-        $test_value
+        $testValue
     ) {
         throw new NotImplementedException(get_called_class() . "::IsValid not implemented!");
     }
@@ -129,17 +129,17 @@ abstract class AbstractValue implements Value
      * subclass and carry the same value().  All other values are considered equal
      * if and only if they are identical (===) to the current objects's value().
      *
-     * @param mixed|static $test_value
+     * @param mixed|static $testValue
      * @return bool
      */
-    final public function equals($test_value)
+    final public function equals($testValue)
     {
-        if ($test_value instanceof static) {
+        if ($testValue instanceof static) {
             // It's an instance of the same class. Compare the wrapped values:
-            return ($this->value() === $test_value->value());
+            return ($this->value() === $testValue->value());
         } else {
             // It's a raw value. Compare it to this instance's value:
-            return ($this->value() === $test_value);
+            return ($this->value() === $testValue);
         }
     }
 
@@ -192,8 +192,8 @@ abstract class AbstractValue implements Value
      */
     final public static function WrapArray(array &$array)
     {
-        $array_copy = $array;
-        foreach ($array_copy as &$value) {
+        $arrayCopy = $array;
+        foreach ($arrayCopy as &$value) {
             if ($value instanceof static) {
                 // See comment in Wrap() -- we don't have to re-wrap existing instances.
             } else {
@@ -202,7 +202,7 @@ abstract class AbstractValue implements Value
         }
 
         // No exception so far? Ok, now save the array and return it:
-        $array = $array_copy;
+        $array = $arrayCopy;
         return $array;
     }
 
@@ -217,8 +217,8 @@ abstract class AbstractValue implements Value
      */
     final public static function WrapOrNullArray(array &$array)
     {
-        $array_copy = $array;
-        foreach ($array_copy as &$value) {
+        $arrayCopy = $array;
+        foreach ($arrayCopy as &$value) {
             if ($value instanceof static) {
                 // See comment in Wrap() -- we don't have to re-wrap existing instances.
             } elseif ($value === null) {
@@ -229,7 +229,7 @@ abstract class AbstractValue implements Value
         }
 
         // No exception so far? Ok, now save the array and return it:
-        $array = $array_copy;
+        $array = $arrayCopy;
         return $array;
     }
 
