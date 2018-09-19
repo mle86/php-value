@@ -243,7 +243,7 @@ abstract class AbstractValue implements Value
      */
     final public function __set($name, $value)
     {
-        throw new NoMagicPropertiesException("immutable objects have no magic properties");
+        throw new NoMagicPropertiesException("immutable objects cannot have magic properties");
     }
 
 }
