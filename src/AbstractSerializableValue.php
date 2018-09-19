@@ -15,6 +15,7 @@ abstract class AbstractSerializableValue extends AbstractValue implements \JsonS
     /**
      * Returns the wrapped value -- like value(), but with an explicit
      * string typecast.  This allows string concatenation of Value objects.
+     *
      * (The typecast is necessary to prevent type mismatch errors
      *  for number-wrapping classes.)
      *

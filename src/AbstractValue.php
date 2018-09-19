@@ -11,7 +11,7 @@ namespace mle86\Value;
  * subclasses must implement.  It is a class method to allow validity checks
  * of external values without wrapping them in an instance.
  *
- *  Example: A sub-class named 'Prime' might perform a primality test in its
+ * Example: A sub-class named 'Prime' might perform a primality test in its
  *  IsValid method. Thus all 'Prime' instances are guaranteed to contain
  *  only a prime number, and methods with a type-hinted Prime argument
  *  don't have to do their own is_int() + is_positive() + is_prime() checks.
@@ -21,7 +21,7 @@ namespace mle86\Value;
  * theoretically still work around that with Reflection magic.)
  * As a typical 'value class', it does not have any other state either.
  *
- * There is a public getter for the contained value:  the value() method.
+ * There is a public getter for the contained value:  the {@see value()} method.
  * Additional getters may be implemented in subclasses (e.g. for different
  * representations of the value).
  *
@@ -60,7 +60,7 @@ abstract class AbstractValue implements Value
 
 
     /**
-     * The constructor uses the subclass' IsValid method to test its input
+     * The constructor uses the subclass' {@see IsValid} method to test its input
      * argument.  Valid values are stored in the new instance,  invalid values
      * cause an InvalidArgumentException to be thrown.
      * Other instance of the same class are always considered valid (re-wrapping).
