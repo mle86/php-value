@@ -12,7 +12,13 @@
 
   "autoload": {
     "psr-4": {
-      "mle86\\Value\\": "src/Value/"
+      "mle86\\Value\\": "src/"
+    }
+  },
+
+  "autoload-dev": {
+    "psr-4": {
+      "mle86\\Value\\Tests\\": "test/"
     }
   },
 

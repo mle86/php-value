@@ -1,6 +1,6 @@
 <?php
 
-namespace mle86\Value\Tests;
+namespace mle86\Value\Tests\Helpers;
 
 /**
  * Like TestWrapper4, but has additional properties.

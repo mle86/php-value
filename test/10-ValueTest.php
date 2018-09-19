@@ -2,14 +2,12 @@
 namespace mle86\Value\Tests;
 
 use mle86\Value\AbstractValue;
+use mle86\Value\Tests\Helpers\ExtTestWrapper4;
+use mle86\Value\Tests\Helpers\TestWrapper4;
+use mle86\Value\Tests\Helpers\TestWrapper9;
 use mle86\Value\Value;
 use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
-
-require_once 'helpers/TestWrapper4.php';
-require_once 'helpers/TestWrapper9.php';
-require_once 'helpers/ExtTestWrapper4.php';
-
 
 /**
  * Tests two simple AbstractValue implementations,

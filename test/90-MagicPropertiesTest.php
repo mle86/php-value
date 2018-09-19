@@ -3,11 +3,9 @@
 namespace mle86\Value\Tests;
 
 use mle86\Value\AbstractValue;
+use mle86\Value\Tests\Helpers\TestWrapper4;
 use mle86\Value\Value;
 use PHPUnit\Framework\TestCase;
-
-require_once 'helpers/TestWrapper4.php';
-
 
 /**
  * Ensures that AbstractValue instances

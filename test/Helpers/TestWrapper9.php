@@ -1,13 +1,13 @@
 <?php
 
-namespace mle86\Value\Tests;
+namespace mle86\Value\Tests\Helpers;
 
 use mle86\Value\AbstractValue;
 
 /**
- * Accepts strings of length 5 with the first letter being a '4'.
+ * Accepts strings of length 5 with the first letter being a '9'.
  */
-class TestWrapper4 extends AbstractValue
+class TestWrapper9 extends AbstractValue
 {
 
     public static function IsValid($test)
@@ -15,7 +15,7 @@ class TestWrapper4 extends AbstractValue
         if ($test instanceof self) {
             return true;
         }
-        if (is_string($test) && strlen($test) === 5 && $test[0] === "4") {
+        if (is_string($test) && strlen($test) === 5 && $test[0] === "9") {
             return true;
         }
         return false;

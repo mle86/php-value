@@ -2,12 +2,10 @@
 namespace mle86\Value\Tests;
 
 use mle86\Value\AbstractSerializableValue;
+use mle86\Value\Tests\Helpers\TestSWrapper6;
 use mle86\Value\Value;
 use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
-
-require_once 'helpers/TestSWrapper6.php';
-
 
 /**
  * Tests a simple AbstractSerializableValue implementation

@@ -1,9 +1,8 @@
 <?php
 
-namespace mle86\Value\Tests;
+namespace mle86\Value\Tests\Helpers;
 
 use mle86\Value\AbstractSerializableValue;
-
 
 /**
  * Accepts strings of length 5 with the first letter being a '6'.
