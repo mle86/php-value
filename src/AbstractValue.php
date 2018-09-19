@@ -187,7 +187,7 @@ abstract class AbstractValue implements Value
      * (It also returns the altered array.)
      * Array keys will be preserved.
      *
-     * @param array <mixed|static> $array
+     * @param mixed[]|static[] $array
      * @return static[]
      */
     final public static function WrapArray(array &$array)
@@ -212,8 +212,8 @@ abstract class AbstractValue implements Value
      * (It also returns the altered array.)
      * Array keys will be preserved.
      *
-     * @param array <mixed|static|null> $array
-     * @return array<static|null>
+     * @param mixed[]|static[]|null[] $array
+     * @return static[]|null[]
      */
     final public static function WrapOrNullArray(array &$array)
     {
