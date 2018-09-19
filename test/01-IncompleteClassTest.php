@@ -7,7 +7,7 @@ use mle86\Value\NotImplementedException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Has no IsValid method!
+ * Has no isValid method!
  */
 class BadTestWrapper extends AbstractValue
 {

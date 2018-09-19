@@ -7,12 +7,12 @@ namespace mle86\Value;
  * The constructor enforces validity checks on the input value.
  * Therefore, every class instance's wrapped value can be considered valid.
  *
- * The validity checks are located in the IsValid class method which all
+ * The validity checks are located in the isValid class method which all
  * subclasses must implement.  It is a class method to allow validity checks
  * of external values without wrapping them in an instance.
  *
  * Example: A sub-class named 'Prime' might perform a primality test in its
- *  IsValid method. Thus all 'Prime' instances are guaranteed to contain
+ *  isValid method. Thus all 'Prime' instances are guaranteed to contain
  *  only a prime number, and methods with a type-hinted Prime argument
  *  don't have to do their own is_int() + is_positive() + is_prime() checks.
  *
@@ -60,14 +60,14 @@ abstract class AbstractValue implements Value
 
 
     /**
-     * The constructor uses the subclass' {@see IsValid} method to test its input
+     * The constructor uses the subclass' {@see isValid} method to test its input
      * argument.  Valid values are stored in the new instance,  invalid values
      * cause an InvalidArgumentException to be thrown.
      * Other instance of the same class are always considered valid (re-wrapping).
      *
      * Subclasses are free to override this constructor,
      * although they should always accept their own instances as input
-     * and should always use their own IsValid method on any other input.
+     * and should always use their own isValid method on any other input.
      * Since subclasses cannot directly access the $value property,
      * they should always call this superconstructor to do the assignment.
      *
@@ -83,10 +83,10 @@ abstract class AbstractValue implements Value
 
         if ($rawValue instanceof static) {
             /* Re-wrapping an existing instance works,
-             * the contained value has already passed the IsValid check once.  */
+             * the contained value has already passed the isValid check once.  */
             $this->value = $rawValue->value();
 
-        } elseif (static::IsValid($rawValue)) {
+        } elseif (static::isValid($rawValue)) {
             $this->value = $rawValue;
 
         } else {
@@ -115,11 +115,11 @@ abstract class AbstractValue implements Value
      * @param mixed|static $testValue
      * @return bool
      */
-    public static function IsValid(
+    public static function isValid(
         /** @noinspection PhpUnusedParameterInspection */
         $testValue
     ) {
-        throw new NotImplementedException(get_called_class() . "::IsValid not implemented!");
+        throw new NotImplementedException(get_called_class() . "::isValid not implemented!");
     }
 
 
@@ -149,12 +149,12 @@ abstract class AbstractValue implements Value
      * (It also returns the new wrapper object.)
      * This means of course that the call will fail with
      * an InvalidArgumentException if the input value fails the subclass'
-     * IsValid check.  If the value already is an instance, it won't be replaced.
+     * isValid check.  If the value already is an instance, it won't be replaced.
      *
      * @param mixed|static $value
      * @return static
      */
-    final public static function Wrap(&$value)
+    final public static function wrap(&$value)
     {
         if ($value instanceof static) {
             /* While re-wrapping would work, it's a waste of resources as it results in two identical objects.
@@ -166,19 +166,19 @@ abstract class AbstractValue implements Value
     }
 
     /**
-     * Like Wrap, but won't change `null` values.
+     * Like {@see wrap}, but won't change `null` values.
      *
      * @param mixed|static|null $value
      * @return static|null
      */
-    final public static function WrapOrNull(&$value)
+    final public static function wrapOrNull(&$value)
     {
         if ($value === null) {
             // ignore
             return $value;
         }
 
-        return static::Wrap($value);
+        return static::wrap($value);
     }
 
     /**
@@ -190,12 +190,12 @@ abstract class AbstractValue implements Value
      * @param mixed[]|static[] $array
      * @return static[]
      */
-    final public static function WrapArray(array &$array)
+    final public static function wrapArray(array &$array)
     {
         $arrayCopy = $array;
         foreach ($arrayCopy as &$value) {
             if ($value instanceof static) {
-                // See comment in Wrap() -- we don't have to re-wrap existing instances.
+                // See comment in wrap() -- we don't have to re-wrap existing instances.
             } else {
                 $value = new static ($value);
             }
@@ -215,12 +215,12 @@ abstract class AbstractValue implements Value
      * @param mixed[]|static[]|null[] $array
      * @return static[]|null[]
      */
-    final public static function WrapOrNullArray(array &$array)
+    final public static function wrapOrNullArray(array &$array)
     {
         $arrayCopy = $array;
         foreach ($arrayCopy as &$value) {
             if ($value instanceof static) {
-                // See comment in Wrap() -- we don't have to re-wrap existing instances.
+                // See comment in wrap() -- we don't have to re-wrap existing instances.
             } elseif ($value === null) {
                 // ignore
             } else {

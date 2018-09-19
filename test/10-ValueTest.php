@@ -95,7 +95,7 @@ class ValueTest extends TestCase
     }
 
     /**
-     * Has to fail, one class must not use another classes IsValid check.
+     * Has to fail, one class must not use another classes isValid check.
      *
      * @dataProvider validInputs9
      * @depends testInvalidInitializer
@@ -193,7 +193,7 @@ class ValueTest extends TestCase
             "wrapper object constructed from instance has different value!");
         $this->assertTrue($twx1->equals(self::$tw1),
             "wrapper object constructed from instance has different value, AND equals() check is not reflexive!");
-        $this->assertTrue(TestWrapper4::IsValid($twx1->value()),
+        $this->assertTrue(TestWrapper4::isValid($twx1->value()),
             "Token object constructed from instance is not self-valid anymore!");
     }
 
@@ -208,19 +208,19 @@ class ValueTest extends TestCase
         $v = $vi[0][0];
         $orig_v = $v;
 
-        $ret = TestWrapper9::Wrap($v);
+        $ret = TestWrapper9::wrap($v);
         /** @type TestWrapper9 $v */
 
         $this->assertTrue(($ret && $ret instanceof TestWrapper9),
-            "Wrap() did not return an instance!");
+            "wrap() did not return an instance!");
         $this->assertNotSame($orig_v, $v,
-            "Wrap() did not change its argument in-place!");
+            "wrap() did not change its argument in-place!");
         $this->assertSame($ret, $v,
-            "Wrap() changed its argument in-place, but not to the new instance!");
+            "wrap() changed its argument in-place, but not to the new instance!");
         $this->assertSame($orig_v, $ret->value(),
-            "Wrap() produced an instance containing wrong value!");
+            "wrap() produced an instance containing wrong value!");
         $this->assertTrue($ret->equals($orig_v),
-            "Wrap() produced an object with equals(initializer) failure!");
+            "wrap() produced an object with equals(initializer) failure!");
 
         return $ret;
     }
@@ -233,7 +233,7 @@ class ValueTest extends TestCase
     {
         $v = $initializer;
         $this->expectException(\InvalidArgumentException::class);
-        TestWrapper4::Wrap($v);
+        TestWrapper4::wrap($v);
     }
 
     /**
@@ -244,7 +244,7 @@ class ValueTest extends TestCase
     {
         $v = $initializer;
         $this->expectException(\InvalidArgumentException::class);
-        TestWrapper4::Wrap($v);
+        TestWrapper4::wrap($v);
     }
 
     /**
@@ -254,7 +254,7 @@ class ValueTest extends TestCase
     public function testRewrap(TestWrapper9 $tw)
     {
         $tx = $tw;
-        TestWrapper9::Wrap($tx);
+        TestWrapper9::wrap($tx);
 
         $this->assertTrue(($tx && ($tx instanceof TestWrapper9)),
             "re-wrapping an existing wrapper object returned something else!");
@@ -272,7 +272,7 @@ class ValueTest extends TestCase
     public function testRewrapInvalid(TestWrapper9 $tx)
     {
         $this->expectException(\InvalidArgumentException::class);
-        TestWrapper4::Wrap($tx);
+        TestWrapper4::wrap($tx);
     }
 
 
@@ -291,30 +291,30 @@ class ValueTest extends TestCase
         $orig_a = $a;
         $this->assertTrue((array_keys($a) === array('k1', 'kk22', 0)));
 
-        $ret = TestWrapper4::WrapArray($a);
+        $ret = TestWrapper4::wrapArray($a);
         /** @type TestWrapper4[] $a */
 
         $this->assertNotSame($a, $orig_a,
-            "WrapArray() did not change its argument in-place!");
+            "wrapArray() did not change its argument in-place!");
         $this->assertSame($ret, $a,
-            "WrapArray() return value is different from its in-place changed argument!");
+            "wrapArray() return value is different from its in-place changed argument!");
 
         $this->assertSame(count($orig_a), count($a),
-            "WrapArray() changed the array size!");
+            "wrapArray() changed the array size!");
         $this->assertSame(array_keys($a), array('k1', 'kk22', 0),
-            "WrapArray() did not preserve array indices!");
+            "wrapArray() did not preserve array indices!");
 
         $this->assertTrue(
             ($a['k1'] instanceof TestWrapper4 &&
             $a['kk22'] instanceof TestWrapper4 &&
             $a[0] instanceof TestWrapper4),
-            "WrapArray() did not wrap all array elements!");
+            "wrapArray() did not wrap all array elements!");
 
         $this->assertTrue(
             ($a['k1']->equals($orig_a['k1']) &&
             $a['kk22']->equals($orig_a['kk22']) &&
             $a[0]->equals($orig_a[0])),
-            "WrapArray() did not preserve index-value associations!");
+            "wrapArray() did not preserve index-value associations!");
     }
 
     /**
@@ -323,10 +323,10 @@ class ValueTest extends TestCase
     public function testWrapArray_empty()
     {
         $e   = array();
-        $ret = TestWrapper9::WrapArray($e);
+        $ret = TestWrapper9::wrapArray($e);
 
-        $this->assertSame(array(), $e, "WrapArray() did not leave an empty array untouched!");
-        $this->assertSame($e, $ret, "WrapArray([]) handled its argument correctly, but returned something else!");
+        $this->assertSame(array(), $e, "wrapArray() did not leave an empty array untouched!");
+        $this->assertSame($e, $ret, "wrapArray([]) handled its argument correctly, but returned something else!");
     }
 
     /**
@@ -347,21 +347,21 @@ class ValueTest extends TestCase
 
         $ex = null;
         try {
-            TestWrapper9::WrapArray($a);
+            TestWrapper9::wrapArray($a);
         } catch (\InvalidArgumentException $ex) {
             // ok!
         }
 
         $this->assertTrue(($ex instanceof \Exception),
-            "WrapArray() did not throw an Exception on invalid array elements!");
+            "wrapArray() did not throw an Exception on invalid array elements!");
         $this->assertSame($orig_a, $a,
-            "WrapArray() already partially altered its argument although it contained invalid elements!");
+            "wrapArray() already partially altered its argument although it contained invalid elements!");
     }
 
 
     /**
-     * This test assumes that Wrap() works fine
-     * and that WrapOrNull() did not fundamentally alter it,
+     * This test assumes that wrap() works fine
+     * and that wrapOrNull() did not fundamentally alter it,
      * except for NULL treatment of course.
      *
      * @depends testWrap
@@ -370,18 +370,18 @@ class ValueTest extends TestCase
     {
         $vi   = self::validInputs();
         $v1   = $vi[0][0];
-        $ret1 = TestWrapper4::WrapOrNull($v1);
+        $ret1 = TestWrapper4::wrapOrNull($v1);
 
         $this->assertTrue(($ret1 && $ret1 instanceof TestWrapper4));
         $this->assertSame($ret1, $v1);
 
         $v0   = null;
-        $ret0 = TestWrapper4::WrapOrNull($v0);
+        $ret0 = TestWrapper4::wrapOrNull($v0);
 
         $this->assertNull($ret0,
-            "WrapOrNull(NULL) did not return NULL!");
+            "wrapOrNull(NULL) did not return NULL!");
         $this->assertNull($v0,
-            "WrapOrNull(NULL) changed its argument!");
+            "wrapOrNull(NULL) changed its argument!");
     }
 
     /**
@@ -397,18 +397,18 @@ class ValueTest extends TestCase
         );
         $orig_a = $a;
 
-        TestWrapper4::WrapOrNullArray($a);
+        TestWrapper4::wrapOrNullArray($a);
 
         $this->assertTrue((
             $a['k1'] instanceof TestWrapper4 &&
             $a['k3'] instanceof TestWrapper4),
-            "WrapOrNullArray() did not correctly wrap the non-NULL array contents!");
+            "wrapOrNullArray() did not correctly wrap the non-NULL array contents!");
         $this->assertNull($a['k2'],
-            "WrapOrNullArray() did not preserve the input array's NULL element!");
+            "wrapOrNullArray() did not preserve the input array's NULL element!");
         $this->assertTrue((
             $a['k1']->equals($orig_a['k1']) &&
             $a['k3']->equals($orig_a['k3'])),
-            "WrapOrNullArray() did not wrap the correct values!");
+            "wrapOrNullArray() did not wrap the correct values!");
     }
 
 
