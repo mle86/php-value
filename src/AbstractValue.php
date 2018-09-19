@@ -160,9 +160,9 @@ abstract class AbstractValue implements Value
             /* While re-wrapping would work, it's a waste of resources as it results in two identical objects.
              * Because the instances are immutable, we can just leave it as it is.  */
             return $value;
-        } else {
-            return ($value = new static($value));
         }
+
+        return ($value = new static($value));
     }
 
     /**
@@ -176,9 +176,9 @@ abstract class AbstractValue implements Value
         if ($value === null) {
             // ignore
             return $value;
-        } else {
-            return static::Wrap($value);
         }
+
+        return static::Wrap($value);
     }
 
     /**
