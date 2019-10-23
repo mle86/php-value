@@ -22,7 +22,7 @@ class OddNumber
 {
 
     // The base class requires this boolean test method:
-    public static function IsValid ($input) {
+    public static function isValid ($input): bool {
         return (is_int($input) && ($input % 2) === 1);
     }
 
@@ -50,16 +50,14 @@ Or insert this into your project's `composer.json` file:
 
 ```js
 "require": {
-    "mle86/value": "^1.0"
+    "mle86/value": "^2.0.0"
 }
 ```
 
 
 # Minimum PHP version:
 
-* PHP 5.4 is needed for the `AbstractSerializableValue` class, as it uses the `JsonSerializable` interface.
-
-* PHP 5.3 is sufficient for the rest (the `Value` interface and `AbstractValue` base class).
+PHP 7.0
 
 
 # Classes and interfaces:
@@ -84,22 +82,22 @@ This immutable class wraps a single value per instance.
 The constructor enforces validity checks on the input value.
 Therefore, every class instance's wrapped value can be considered valid.
 
-The validity checks are located in the IsValid class method which all
+The validity checks are located in the isValid class method which all
 subclasses must implement.  It is a class method to allow validity checks
 of external values without wrapping them in an instance.
 
 
 * <code>public function <b>\_\_construct</b> ($raw\_value)</code>
 
-	The constructor uses the subclass' `IsValid` method to test its input argument.
+	The constructor uses the `isValid` class method to test its input argument.
 	Valid values are stored in the new instance, invalid values cause an `InvalidArgumentException` to be thrown.
 	Other instances of the same class are always considered valid (*re-wrapping*).
 
-* <code>public static function <b>IsValid</b> ($test\_value)</code>
+* <code>public static function <b>isValid</b> ($test\_value): bool</code>
 
-	Checks the validity of a raw value. If it returns true, a new object can be instantiated with the same value.
+	Checks the validity of a raw value.
+	If it returns true, a new object can be instantiated with that value.
 	Implement this in every subclass!
-	In the base class implementation, it simply throws a `NotImplementedException`.
 
 * <code>final public function <b>value</b> ()</code>
 
@@ -107,57 +105,51 @@ of external values without wrapping them in an instance.
 
 * <code>final public function <b>equals</b> ($test\_value)</code>
 
+	Equality test.
 	This method performs an equality check on other instances or raw values.
 	Objects are considered equal if and only if they are instances of the same subclass and carry the same `value()`.
 	All other values are considered equal if and only if they are identical (`===`) to the current objects's `value()`.
 
-* <code>final public static function <b>Wrap</b> (&$value)</code>
+* <code>final public static function <b>wrap</b> (&$value)</code>
 
 	Replaces a value (by-reference) with instance wrapping that value.
-	This means of course that the call will fail with an `InvalidArgumentException` if the input value fails the subclass' `IsValid` check.
+	This means of course that the call will fail with an `InvalidArgumentException` if the input value fails the subclass' `isValid` check.
 	If the value already is an instance, it won't be replaced.
 
-* <code>final public static function <b>WrapOrNull</b> (&$value)</code>
+* <code>final public static function <b>wrapOrNull</b> (&$value)</code>
 
-	Like `Wrap()`, but won't change `NULL` values.
+	Like `wrap()`, but won't change `null` values.
 
-* <code>final public static function <b>WrapArray</b> (array &$array)</code>
+* <code>final public static function <b>wrapArray</b> (array &$array): array</code>
 
 	Will replace all values in an array with instances.
 	The array will only be altered (by-reference) if all its values are valid.
 	Array keys will be preserved.
 
-* <code>final public static function <b>WrapOrNullArray</b> (array &$array)</code>
+* <code>final public static function <b>wrapOrNullArray</b> (array &$array): array</code>
 
-	Will replace all non-`NULL` values in an array with instances.
-	The array will only be changed (by-reference) if all its values are valid (or `NULL`).
+	Will replace all non-`null` values in an array with instances.
+	The array will only be changed (by-reference) if all its values are valid (or `null`).
 	Array keys will be preserved.
 
 
 ## AbstractSerializableValue
 
 This extension of `AbstractValue` provides easy serializability for the Value objects.
-It implements the PHP 5.4 [JsonSerializable](https://php.net/manual/class.jsonserializable.php) interface.
+It implements the [JsonSerializable](https://php.net/manual/class.jsonserializable.php) interface.
 
-* <code>public function <b>\_\_toString</b> ()</code>
+* <code>public function <b>\_\_toString</b> (): string</code>
 
-	Returns the wrapped value –
-	like `value()`, but with an explicit `(string)` typecast.
-	This allows string concatenation of Value objects.
+	Returns the wrapped value like `value()`, but with an explicit
+	`string` typecast.  This allows string concatenation of Value objects.
 
 * <code>public function <b>jsonSerialize</b> ()</code>
 
 	Returns the wrapped value –
 	like `value()`.
-	This enables [json_encode()](https://secure.php.net/json_encode) to encode the Value object.
+	This enables [json_encode()](https://secure.php.net/json_encode) to encode the object.
 
 
 ## InvalidArgumentException
 
 An empty extension of PHP's `InvalidArgumentException`.
-
-
-## NotImplementedException
-
-An empty extension of PHP's `ErrorException`.
-

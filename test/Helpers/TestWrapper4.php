@@ -10,7 +10,7 @@ use mle86\Value\AbstractValue;
 class TestWrapper4 extends AbstractValue
 {
 
-    public static function isValid($test)
+    public static function isValid($test): bool
     {
         if ($test instanceof self) {
             return true;

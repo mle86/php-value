@@ -4,7 +4,7 @@ namespace mle86\Value;
 
 /**
  * This extension of AbstractValue provides easy serializability
- * for the Value objects.  It implements the PHP 5.4 JsonSerializable interface.
+ * for the Value objects.  It implements the JsonSerializable interface.
  *
  * @author Maximilian Eul
  * @link https://github.com/mle86/php-value
@@ -18,10 +18,8 @@ abstract class AbstractSerializableValue extends AbstractValue implements \JsonS
      *
      * (The typecast is necessary to prevent type mismatch errors
      *  for number-wrapping classes.)
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string)$this->value();
     }

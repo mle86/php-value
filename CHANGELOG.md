@@ -1,3 +1,8 @@
+v2.0.0 (2019-10)
+
+ * Use PHP 7 language features
+   (breaks PHP 5.3 compatibility)
+
 v1.1.2 (2019-10-23)
 * package cleanup
 

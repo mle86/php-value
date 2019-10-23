@@ -32,6 +32,21 @@ abstract class AbstractValue implements Value
 {
 
     /**
+     * Checks the validity of a raw value.
+     *
+     * If this method returns true,
+     * the constructor will accept that value.
+     *
+     * Always include an `if ($testValue instanceof static) { return true; }`
+     * check, as already-wrapped values are always considered valid!
+     *
+     * @param mixed|static $testValue
+     * @return bool
+     */
+    abstract public static function isValid($testValue): bool;
+
+
+    /**
      * This is the one value which this class wraps.
      * It must only be written to in the class constructor.
      *
@@ -60,7 +75,7 @@ abstract class AbstractValue implements Value
 
 
     /**
-     * The constructor uses the subclass' {@see isValid} method to test its input
+     * The constructor uses the {@see isValid} class method to test its input
      * argument.  Valid values are stored in the new instance,  invalid values
      * cause an InvalidArgumentException to be thrown.
      * Other instance of the same class are always considered valid (re-wrapping).
@@ -94,29 +109,8 @@ abstract class AbstractValue implements Value
                 ? "'{$rawValue}'"
                 : gettype($rawValue);
 
-            throw new InvalidArgumentException("not a valid " . get_called_class() . ": {$input}");
+            throw new InvalidArgumentException("not a valid " . static::class . ": {$input}");
         }
-    }
-
-
-    /** @noinspection PhpDocMissingThrowsInspection */
-    /**
-     * Checks the validity of a raw value.
-     *
-     * If this method returns true,
-     * the constructor will accept that value.
-     *
-     * Always include an 'if ($testValue instanceof static) { return true; }'
-     * check, as already-wrapped values are always considered valid!
-     *
-     * @param mixed|static $testValue
-     * @return bool
-     */
-    public static function isValid(
-        /** @noinspection PhpUnusedParameterInspection */
-        $testValue
-    ) {
-        throw new NotImplementedException(get_called_class() . "::isValid not implemented!");
     }
 
 
@@ -131,7 +125,7 @@ abstract class AbstractValue implements Value
      * @param mixed|static $testValue
      * @return bool
      */
-    final public function equals($testValue)
+    final public function equals($testValue): bool
     {
         if ($testValue instanceof static) {
             // It's an instance of the same class. Compare the wrapped values:
@@ -189,7 +183,7 @@ abstract class AbstractValue implements Value
      * @param mixed[]|static[] $array
      * @return static[]
      */
-    final public static function wrapArray(array &$array)
+    final public static function wrapArray(array &$array): array
     {
         $arrayCopy = $array;
         foreach ($arrayCopy as &$value) {
@@ -214,7 +208,7 @@ abstract class AbstractValue implements Value
      * @param mixed[]|static[]|null[] $array
      * @return static[]|null[]
      */
-    final public static function wrapOrNullArray(array &$array)
+    final public static function wrapOrNullArray(array &$array): array
     {
         $arrayCopy = $array;
         foreach ($arrayCopy as &$value) {

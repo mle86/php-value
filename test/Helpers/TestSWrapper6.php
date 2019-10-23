@@ -10,7 +10,7 @@ use mle86\Value\AbstractSerializableValue;
 class TestSWrapper6 extends AbstractSerializableValue
 {
 
-	public static function isValid ($test) {
+	public static function isValid ($test): bool {
 		if ($test instanceof self) {
             return true;
         }
