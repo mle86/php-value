@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/mle86/php-value.svg?branch=master)](https://travis-ci.org/mle86/php-value)
 [![Coverage Status](https://coveralls.io/repos/github/mle86/php-value/badge.svg?branch=master)](https://coveralls.io/github/mle86/php-value?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/mle86/value/version)](https://packagist.org/packages/mle86/value)
+[![PHP 7.0](https://img.shields.io/badge/php-7.0-8892BF.svg?style=flat)](https://php.net/)
 [![License](https://poser.pugx.org/mle86/value/license)](https://packagist.org/packages/mle86/value)
 
 This PHP library provides a simple base class for Immutable Value Objects.
