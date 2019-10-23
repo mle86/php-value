@@ -1,4 +1,5 @@
 <?php
+
 namespace mle86\Value\Tests;
 
 use mle86\Value\AbstractSerializableValue;
@@ -21,20 +22,18 @@ class SerializableValueTest extends TestCase
 
     public function testClassExists()
     {
-        $class     = 'mle86\\Value\\AbstractValue';
-        $interface = 'mle86\\Value\\Value';
+        $class = 'mle86\\Value\\AbstractSerializableValue';
 
         $this->assertTrue(class_exists($class),
             "Class {$class} not found!");
-        $this->assertTrue(is_a($class, $interface, true),
-            "Class {$class} does not implement the {$interface} interface!");
+        $this->assertTrue(is_a(AbstractSerializableValue::class, Value::class, true),
+            "Class ".AbstractSerializableValue::class." does not implement the ".Value::class." interface!");
     }
 
     /**
      * @depends testClassExists
-     * @return AbstractSerializableValue
      */
-    public function testInstance()
+    public function testInstance(): AbstractSerializableValue
     {
         $tw = new TestSWrapper6(self::VALID_INPUT);
 
@@ -61,8 +60,8 @@ class SerializableValueTest extends TestCase
      */
     public function testJson(AbstractSerializableValue $tw)
     {
-        $j        = json_decode(json_encode(array($tw)));
-        $expected = array($tw->value());
+        $j        = json_decode(json_encode([$tw]));
+        $expected = [$tw->value()];
 
         $this->assertSame($expected, $j,
             "serializable wrapper has a jsonSerialize() method, but returned wrong value!");

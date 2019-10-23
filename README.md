@@ -101,11 +101,11 @@ of external values without wrapping them in an instance.
   If it returns true, a new object can be instantiated with that value.
   Implement this in every subclass!
 
-* <code>final public function <b>value</b>()</code>
+* <code>final public function <b>value</b>(): mixed</code>
 
   Returns the object's wrapped initializer value.
 
-* <code>final public function <b>equals</b>($test\_value)</code>
+* <code>final public function <b>equals</b>($test\_value): bool</code>
 
   Equality test.
   This method performs an equality check on other instances or raw values.
@@ -140,12 +140,12 @@ of external values without wrapping them in an instance.
 This extension of `AbstractValue` provides easy serializability for the Value objects.
 It implements the [JsonSerializable](https://php.net/manual/class.jsonserializable.php) interface.
 
-* <code>public function <b>\_\_toString</b> (): string</code>
+* <code>public function <b>\_\_toString</b>(): string</code>
 
   Returns the wrapped value like `value()`, but with an explicit
   `string` typecast.  This allows string concatenation of Value objects.
 
-* <code>public function <b>jsonSerialize</b> ()</code>
+* <code>public function <b>jsonSerialize</b>(): mixed</code>
 
   Returns the wrapped value –
   like `value()`.

@@ -17,10 +17,7 @@ class DoubleConstructorCallTest extends TestCase
     const VALID_VALUE1 = "41111";
     const VALID_VALUE2 = "42222";
 
-    /**
-     * @return Value
-     */
-    public function testInstance()
+    public function testInstance(): Value
     {
         $tw = new TestWrapper4(self::VALID_VALUE1);
 

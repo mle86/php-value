@@ -1,4 +1,5 @@
 <?php
+
 namespace mle86\Value\Tests;
 
 use mle86\Value\AbstractValue;
@@ -23,19 +24,19 @@ class ValueTest extends TestCase
     protected static $tw2;
 
 
-    public function validInputs() { return [
+    public static function validInputs(): array { return [
         ["41111"],
         ["42020"],
     ]; }
 
-    public function invalidInputs() { return [
+    public static function invalidInputs(): array { return [
         [811],
         ["z"],
         [array("41111")],
         [null],
     ]; }
 
-    public function validInputs9() { return [
+    public static function validInputs9(): array { return [
         ["91111"],
         ["92020"],
         ["93330"],
@@ -44,13 +45,12 @@ class ValueTest extends TestCase
 
     public function testClassExists()
     {
-        $class     = 'mle86\\Value\\AbstractValue';
-        $interface = 'mle86\\Value\\Value';
+        $class = 'mle86\\Value\\AbstractValue';
 
         $this->assertTrue(class_exists($class),
             "Class {$class} not found!");
-        $this->assertTrue(is_a($class, $interface, true),
-            "Class {$class} does not implement the {$interface} interface!");
+        $this->assertTrue(is_a(AbstractValue::class, Value::class, true),
+            "Class ".AbstractValue::class." does not implement the ".Value::class." interface!");
     }
 
     /**
@@ -111,9 +111,8 @@ class ValueTest extends TestCase
 
     /**
      * @depends testConstructor
-     * @return TestWrapper4
      */
-    public function testValue()
+    public function testValue(): TestWrapper4
     {
         $vi = self::validInputs();
         $initializer = $vi[0][0];
@@ -200,9 +199,8 @@ class ValueTest extends TestCase
 
     /**
      * @depends testConstructor9
-     * @return TestWrapper9
      */
-    public function testWrap()
+    public function testWrap(): TestWrapper9
     {
         $vi = self::validInputs9();
         $v = $vi[0][0];
@@ -249,9 +247,8 @@ class ValueTest extends TestCase
 
     /**
      * @depends testWrap
-     * @return TestWrapper9
      */
-    public function testRewrap(TestWrapper9 $tw)
+    public function testRewrap(TestWrapper9 $tw): TestWrapper9
     {
         $tx = $tw;
         TestWrapper9::wrap($tx);
@@ -282,14 +279,14 @@ class ValueTest extends TestCase
     public function testWrapArray()
     {
         $vi = self::validInputs();
-        $a  = array(
+        $a  = [
             'k1'   => $vi[0][0],
             'kk22' => $vi[1][0],
             0      => self::$tw1,  // includes an instance
-        );
+        ];
 
         $orig_a = $a;
-        $this->assertTrue((array_keys($a) === array('k1', 'kk22', 0)));
+        $this->assertTrue((array_keys($a) === ['k1', 'kk22', 0]));
 
         $ret = TestWrapper4::wrapArray($a);
         /** @type TestWrapper4[] $a */
@@ -301,7 +298,7 @@ class ValueTest extends TestCase
 
         $this->assertSame(count($orig_a), count($a),
             "wrapArray() changed the array size!");
-        $this->assertSame(array_keys($a), array('k1', 'kk22', 0),
+        $this->assertSame(array_keys($a), ['k1', 'kk22', 0],
             "wrapArray() did not preserve array indices!");
 
         $this->assertTrue(
@@ -322,10 +319,10 @@ class ValueTest extends TestCase
      */
     public function testWrapArray_empty()
     {
-        $e   = array();
+        $e   = [];
         $ret = TestWrapper9::wrapArray($e);
 
-        $this->assertSame(array(), $e, "wrapArray() did not leave an empty array untouched!");
+        $this->assertSame([], $e, "wrapArray() did not leave an empty array untouched!");
         $this->assertSame($e, $ret, "wrapArray([]) handled its argument correctly, but returned something else!");
     }
 
@@ -337,11 +334,11 @@ class ValueTest extends TestCase
     {
         $vi = self::validInputs9();
 
-        $a = array(
+        $a = [
             $vi[0][0],
             $invalid_initializer,
             'j' => $vi[2][0],
-        );
+        ];
 
         $orig_a = $a;
 
@@ -389,12 +386,12 @@ class ValueTest extends TestCase
      */
     public function testWrapOrNullArray()
     {
-        $vi     = self::validInputs();
-        $a      = array(
+        $vi = self::validInputs();
+        $a  = [
             'k1' => $vi[0][0],
             'k2' => null,
             'k3' => $vi[1][0],
-        );
+        ];
         $orig_a = $a;
 
         TestWrapper4::wrapOrNullArray($a);
@@ -412,7 +409,7 @@ class ValueTest extends TestCase
     }
 
 
-    public function additionalPropertyValues() { return [
+    public static function additionalPropertyValues(): array { return [
         [0],
         [\PHP_INT_MAX],
         [false],
@@ -424,9 +421,8 @@ class ValueTest extends TestCase
      * Tries to instantiate a wrapper object from an extended class, i.e. it has additional properties (for whatever reason).
      *
      * @depends testConstructor
-     * @return ExtTestWrapper4
      */
-    public function testExtendedObject()
+    public function testExtendedObject(): ExtTestWrapper4
     {
         $vi = self::validInputs();
 

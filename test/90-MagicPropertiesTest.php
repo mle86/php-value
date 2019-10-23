@@ -20,10 +20,7 @@ class MagicPropertiesTest extends TestCase
 
     const VALID_VALUE = "41111";
 
-    /**
-     * @return Value
-     */
-    public function testInstance()
+    public function testInstance(): Value
     {
         $tw = new TestWrapper4(self::VALID_VALUE);
 
@@ -41,7 +38,7 @@ class MagicPropertiesTest extends TestCase
         $prop  = "magic_property_3453465110";
         $setto = 86;
 
-        $pv = (isset($o->{$prop})) ? $o->{$prop} : null;
+        $pv = $o->{$prop} ?? null;
         $this->assertNull($pv,
             "Newly-create object already has a magic property?!");
 
@@ -56,7 +53,7 @@ class MagicPropertiesTest extends TestCase
         $this->assertNotNull($e,
             "Setting a magic property did NOT result in an exception!");
 
-        $pv = (isset($o->{$prop})) ? $o->{$prop} : null;
+        $pv = $o->{$prop} ?? null;
         $this->assertNotEquals($setto, $pv,
             "Setting a magic property WORKED, despite throwing an exception!");
         $this->assertNull($pv,
