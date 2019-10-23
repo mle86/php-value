@@ -1,3 +1,6 @@
+v1.1.2 (2019-10-23)
+* package cleanup
+
 v1.1.1 (2018-09-10)
 * package cleanup
 
