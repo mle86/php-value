@@ -87,6 +87,7 @@ abstract class AbstractValue implements Value
      * they should always call this superconstructor to do the assignment.
      *
      * @param mixed|static $rawValue
+     * @throws InvalidArgumentException
      */
     public function __construct($rawValue)
     {
@@ -190,9 +191,10 @@ abstract class AbstractValue implements Value
             if ($value instanceof static) {
                 // See comment in wrap() -- we don't have to re-wrap existing instances.
             } else {
-                $value = new static ($value);
+                $value = new static($value);
             }
         }
+        unset($value);
 
         // No exception so far? Ok, now save the array and return it:
         $array = $arrayCopy;
@@ -217,15 +219,17 @@ abstract class AbstractValue implements Value
             } elseif ($value === null) {
                 // ignore
             } else {
-                $value = new static ($value);
+                $value = new static($value);
             }
         }
+        unset($value);
 
         // No exception so far? Ok, now save the array and return it:
         $array = $arrayCopy;
         return $array;
     }
 
+    /** @noinspection MagicMethodsValidityInspection */
     /**
      * This method prevents setting any magic methods.
      *

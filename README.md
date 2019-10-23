@@ -17,22 +17,23 @@ It is released under the [MIT License](http://opensource.org/licenses/MIT).
 # Simple use case:
 
 ```php
-class OddNumber
-	extends \mle86\Value\AbstractValue
+class OddNumber extends \mle86\Value\AbstractValue
 {
 
     // The base class requires this boolean test method:
-    public static function isValid ($input): bool {
+    public static function isValid($input): bool
+    {
         return (is_int($input) && ($input % 2) === 1);
     }
 
     // Nothing else is needed.
 }
 
-function my_function (OddNumber $odd_argument) {
-    /* No further validation of $odd_argument is necessary in this function,
+function myFunction(OddNumber $oddArgument)
+{
+    /* No further validation of $oddArgument is necessary in this function,
      * it's guaranteed to contain an odd number. */
-    print "Got an odd number here: " . $odd_argument->value();
+    print "Got an odd number here: " . $oddArgument->value();
 }
 
 $odd1 = new OddNumber(61);       // works as expected, $odd1->value() will return 61
@@ -44,11 +45,11 @@ $odd4 = new OddNumber(null);     // throws an InvalidArgumentException
 
 # Installation:
 
-Via Composer:  `$ ./composer.phar require mle86/value`
+Via Composer:  `composer require mle86/value`
 
 Or insert this into your project's `composer.json` file:
 
-```js
+```json
 "require": {
     "mle86/value": "^2.0.0"
 }
@@ -87,50 +88,50 @@ subclasses must implement.  It is a class method to allow validity checks
 of external values without wrapping them in an instance.
 
 
-* <code>public function <b>\_\_construct</b> ($raw\_value)</code>
+* <code>public function <b>\_\_construct</b>($raw\_value)</code>
 
-	The constructor uses the `isValid` class method to test its input argument.
-	Valid values are stored in the new instance, invalid values cause an `InvalidArgumentException` to be thrown.
-	Other instances of the same class are always considered valid (*re-wrapping*).
+  The constructor uses the `isValid` class method to test its input argument.
+  Valid values are stored in the new instance, invalid values cause an `InvalidArgumentException` to be thrown.
+  Other instances of the same class are always considered valid (*re-wrapping*).
 
-* <code>public static function <b>isValid</b> ($test\_value): bool</code>
+* <code>public static function <b>isValid</b>($test\_value): bool</code>
 
-	Checks the validity of a raw value.
-	If it returns true, a new object can be instantiated with that value.
-	Implement this in every subclass!
+  Checks the validity of a raw value.
+  If it returns true, a new object can be instantiated with that value.
+  Implement this in every subclass!
 
-* <code>final public function <b>value</b> ()</code>
+* <code>final public function <b>value</b>()</code>
 
-	Returns the object's wrapped initializer value.
+  Returns the object's wrapped initializer value.
 
-* <code>final public function <b>equals</b> ($test\_value)</code>
+* <code>final public function <b>equals</b>($test\_value)</code>
 
-	Equality test.
-	This method performs an equality check on other instances or raw values.
-	Objects are considered equal if and only if they are instances of the same subclass and carry the same `value()`.
-	All other values are considered equal if and only if they are identical (`===`) to the current objects's `value()`.
+  Equality test.
+  This method performs an equality check on other instances or raw values.
+  Objects are considered equal if and only if they are instances of the same subclass and carry the same `value()`.
+  All other values are considered equal if and only if they are identical (`===`) to the current objects's `value()`.
 
-* <code>final public static function <b>wrap</b> (&$value)</code>
+* <code>final public static function <b>wrap</b>(&$value)</code>
 
-	Replaces a value (by-reference) with instance wrapping that value.
-	This means of course that the call will fail with an `InvalidArgumentException` if the input value fails the subclass' `isValid` check.
-	If the value already is an instance, it won't be replaced.
+  Replaces a value (by-reference) with instance wrapping that value.
+  This means of course that the call will fail with an `InvalidArgumentException` if the input value fails the subclass' `isValid` check.
+  If the value already is an instance, it won't be replaced.
 
-* <code>final public static function <b>wrapOrNull</b> (&$value)</code>
+* <code>final public static function <b>wrapOrNull</b>(&$value)</code>
 
-	Like `wrap()`, but won't change `null` values.
+  Like `wrap()`, but won't change `null` values.
 
-* <code>final public static function <b>wrapArray</b> (array &$array): array</code>
+* <code>final public static function <b>wrapArray</b>(array &$array): array</code>
 
-	Will replace all values in an array with instances.
-	The array will only be altered (by-reference) if all its values are valid.
-	Array keys will be preserved.
+  Will replace all values in an array with instances.
+  The array will only be altered (by-reference) if all its values are valid.
+  Array keys will be preserved.
 
-* <code>final public static function <b>wrapOrNullArray</b> (array &$array): array</code>
+* <code>final public static function <b>wrapOrNullArray</b>(array &$array): array</code>
 
-	Will replace all non-`null` values in an array with instances.
-	The array will only be changed (by-reference) if all its values are valid (or `null`).
-	Array keys will be preserved.
+  Will replace all non-`null` values in an array with instances.
+  The array will only be changed (by-reference) if all its values are valid (or `null`).
+  Array keys will be preserved.
 
 
 ## AbstractSerializableValue
@@ -140,14 +141,14 @@ It implements the [JsonSerializable](https://php.net/manual/class.jsonserializab
 
 * <code>public function <b>\_\_toString</b> (): string</code>
 
-	Returns the wrapped value like `value()`, but with an explicit
-	`string` typecast.  This allows string concatenation of Value objects.
+  Returns the wrapped value like `value()`, but with an explicit
+  `string` typecast.  This allows string concatenation of Value objects.
 
 * <code>public function <b>jsonSerialize</b> ()</code>
 
-	Returns the wrapped value –
-	like `value()`.
-	This enables [json_encode()](https://secure.php.net/json_encode) to encode the object.
+  Returns the wrapped value –
+  like `value()`.
+  This enables [json\_encode()](https://secure.php.net/json_encode) to encode the object.
 
 
 ## InvalidArgumentException
