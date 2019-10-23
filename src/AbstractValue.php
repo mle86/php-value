@@ -101,13 +101,10 @@ abstract class AbstractValue implements Value
 
     /** @noinspection PhpDocMissingThrowsInspection */
     /**
-     * Checks the validity of a raw value.  If this method returns true,
-     * a new object can be instantiated with the same value.
-     * Implement this in every subclass!
+     * Checks the validity of a raw value.
      *
-     * This method stub is here because static methods cannot be declared abstract.
-     * It ensures that instantiating a sub-class without this method will result
-     * in an exception, not a PHP error about a missing method.
+     * If this method returns true,
+     * the constructor will accept that value.
      *
      * Always include an 'if ($testValue instanceof static) { return true; }'
      * check, as already-wrapped values are always considered valid!
@@ -124,6 +121,8 @@ abstract class AbstractValue implements Value
 
 
     /**
+     * Equality test.
+     *
      * This method performs an equality check on other instances or raw values.
      * Objects are considered equal if and only if they are instances of the same
      * subclass and carry the same value().  All other values are considered equal
@@ -234,9 +233,10 @@ abstract class AbstractValue implements Value
     }
 
     /**
-     * Immutable objects cannot have any magic properties,
-     * as they would be public and therefore changeable.
      * This method prevents setting any magic methods.
+     *
+     * Immutable objects should have any magic properties
+     * as they would be public and therefore changeable.
      *
      * @throws NoMagicPropertiesException  (always)
      * @internal

@@ -13,7 +13,7 @@ abstract class AbstractSerializableValue extends AbstractValue implements \JsonS
 {
 
     /**
-     * Returns the wrapped value -- like value(), but with an explicit
+     * Returns the wrapped value like {@see value()}, but with an explicit
      * string typecast.  This allows string concatenation of Value objects.
      *
      * (The typecast is necessary to prevent type mismatch errors
@@ -27,8 +27,8 @@ abstract class AbstractSerializableValue extends AbstractValue implements \JsonS
     }
 
     /**
-     * Returns the wrapped value -- like value().
-     * This enables json_encode() to encode the Value object.
+     * Returns the wrapped value -- like {@see value()}.
+     * This allows {@see json_encode()} to encode the object.
      *
      * @return mixed
      */

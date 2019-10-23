@@ -17,8 +17,8 @@ namespace mle86\Value;
 interface Value
 {
 
-    public function value();
-
     public function __construct($rawValue);
+
+    public function value();
 
 }
