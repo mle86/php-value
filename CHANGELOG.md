@@ -1,4 +1,4 @@
-v2.0.0 (2019-10)
+v2.0.0 (2019-10-23)
 
  * Use PHP 7 language features
    (breaks PHP 5.3 compatibility)
