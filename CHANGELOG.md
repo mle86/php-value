@@ -1,4 +1,4 @@
-v1.2.0 (2019-11 -- backported from v2.1.0)
+v1.2.0 (2019-11-13 -- backported from v2.1.0)
 
 * New `optional()` constructor for nullable values
 
