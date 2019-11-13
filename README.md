@@ -118,7 +118,7 @@ of external values without wrapping them in an instance.
   This means of course that the call will fail with an `InvalidArgumentException` if the input value fails the subclass' `isValid` check.
   If the value already is an instance, it won't be replaced.
 
-* <code>final public static function <b>wrapOrNull</b>(&$value)</code>
+* <code>final public static function <b>wrapOptional</b>(&$value)</code>
 
   Like `wrap()`, but won't change `null` values.
 
@@ -128,7 +128,7 @@ of external values without wrapping them in an instance.
   The array will only be altered (by-reference) if all its values are valid.
   Array keys will be preserved.
 
-* <code>final public static function <b>wrapOrNullArray</b>(array &$array): array</code>
+* <code>final public static function <b>wrapOptionalsArray</b>(array &$array): array</code>
 
   Will replace all non-`null` values in an array with instances.
   The array will only be changed (by-reference) if all its values are valid (or `null`).

@@ -1,3 +1,7 @@
+v2.1.0 (2019-11)
+
+ * Better `wrap...` function names
+
 v2.0.0 (2019-10-23)
 
  * Use PHP 7 language features

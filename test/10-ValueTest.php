@@ -358,33 +358,33 @@ class ValueTest extends TestCase
 
     /**
      * This test assumes that wrap() works fine
-     * and that wrapOrNull() did not fundamentally alter it,
+     * and that wrapOptional() did not fundamentally alter it,
      * except for NULL treatment of course.
      *
      * @depends testWrap
      */
-    public function testWrapOrNull()
+    public function testWrapOptional()
     {
         $vi   = self::validInputs();
         $v1   = $vi[0][0];
-        $ret1 = TestWrapper4::wrapOrNull($v1);
+        $ret1 = TestWrapper4::wrapOptional($v1);
 
         $this->assertTrue(($ret1 && $ret1 instanceof TestWrapper4));
         $this->assertSame($ret1, $v1);
 
         $v0   = null;
-        $ret0 = TestWrapper4::wrapOrNull($v0);
+        $ret0 = TestWrapper4::wrapOrNull($v0);  // legacy fn name
 
         $this->assertNull($ret0,
-            "wrapOrNull(NULL) did not return NULL!");
+            "wrapOptional(NULL) did not return NULL!");
         $this->assertNull($v0,
-            "wrapOrNull(NULL) changed its argument!");
+            "wrapOptional(NULL) changed its argument!");
     }
 
     /**
      * @depends testWrapArray
      */
-    public function testWrapOrNullArray()
+    public function testWrapOptionalsArray()
     {
         $vi = self::validInputs();
         $a  = [
@@ -394,23 +394,23 @@ class ValueTest extends TestCase
         ];
         $orig_a = $a;
 
-        TestWrapper4::wrapOrNullArray($a);
+        TestWrapper4::wrapOptionalsArray($a);
 
         $this->assertTrue((
             $a['k1'] instanceof TestWrapper4 &&
             $a['k3'] instanceof TestWrapper4),
-            "wrapOrNullArray() did not correctly wrap the non-NULL array contents!");
+            "wrapOptionalsArray() did not correctly wrap the non-NULL array contents!");
         $this->assertNull($a['k2'],
-            "wrapOrNullArray() did not preserve the input array's NULL element!");
+            "wrapOptionalsArray() did not preserve the input array's NULL element!");
         $this->assertTrue((
             $a['k1']->equals($orig_a['k1']) &&
             $a['k3']->equals($orig_a['k3'])),
-            "wrapOrNullArray() did not wrap the correct values!");
+            "wrapOptionalsArray() did not wrap the correct values!");
 
         $empty = [];
-        TestWrapper4::wrapOrNullArray($empty);
+        TestWrapper4::wrapOrNullArray($empty);  // legacy fn name
         $this->assertSame([], $empty,
-            "wrapOrNullArray() did not handle empty array correctly!");
+            "wrapOptionalsArray() did not handle empty array correctly!");
     }
 
 
