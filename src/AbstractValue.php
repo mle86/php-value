@@ -187,7 +187,7 @@ abstract class AbstractValue implements Value
      * @param mixed|static|null $value
      * @return static|null
      */
-    final public static function WrapOrNull(&$value)
+    final public static function wrapOptional(&$value)
     {
         if ($value === null) {
             // ignore
@@ -231,7 +231,7 @@ abstract class AbstractValue implements Value
      * @param mixed[]|static[]|null[] $array
      * @return static[]|null[]
      */
-    final public static function WrapOrNullArray(array &$array)
+    final public static function wrapOptionalsArray(array &$array): array
     {
         $arrayCopy = $array;
         foreach ($arrayCopy as &$value) {
@@ -260,6 +260,29 @@ abstract class AbstractValue implements Value
     final public function __set($name, $value)
     {
         throw new NoMagicPropertiesException("immutable objects cannot have magic properties");
+    }
+
+
+    // Legacy aliases:
+
+    /**
+     * @deprecated Use {@see wrapOptional} instead.
+     * @param mixed|static|null $value
+     * @return static|null
+     */
+    final public static function wrapOrNull(&$value)
+    {
+        return self::wrapOptional($value);
+    }
+
+    /**
+     * @deprecated Use {@see wrapOptionalsArray} instead.
+     * @param mixed[]|static[]|null[] $array
+     * @return static[]|null[]
+     */
+    final public static function wrapOrNullArray(array &$array): array
+    {
+        return self::wrapOptionalsArray($array);
     }
 
 }

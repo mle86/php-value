@@ -1,3 +1,7 @@
+v1.3.1 (2020-03 -- backported from v2.1.0)
+
+ * Better `wrap...` function names
+
 v1.3.0 (2019-11-28 -- backported from v2.2.0)
 
  * Improved unserialization
