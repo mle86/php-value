@@ -41,6 +41,10 @@ $odd1 = new OddNumber(61);       // works as expected, $odd1->value() will retur
 $odd2 = new OddNumber(40);       // throws an InvalidArgumentException
 $odd3 = new OddNumber("string"); // throws an InvalidArgumentException
 $odd4 = new OddNumber(null);     // throws an InvalidArgumentException
+
+$odd5   = OddNumber::optional(33);   // works as expected, $odd5->value() will return 33
+$nonodd = OddNumber::optional(null); // $nonodd is now null
+$odd6   = OddNumber::optional(40);   // throws an InvalidArgumentException
 ```
 
 
@@ -94,6 +98,11 @@ of external values without wrapping them in an instance.
   The constructor uses the `isValid` class method to test its input argument.
   Valid values are stored in the new instance, invalid values cause an `InvalidArgumentException` to be thrown.
   Other instances of the same class are always considered valid (*re-wrapping*).
+
+* <code>public static function <b>optional</b>($raw\_value): ?static</code>
+
+  Same as the default constructor,
+  but also accepts `null` values (which will be returned unchanged).
 
 * <code>abstract public static function <b>isValid</b>($test\_value): bool</code>
 

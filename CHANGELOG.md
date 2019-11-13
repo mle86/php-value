@@ -1,5 +1,6 @@
 v2.1.0 (2019-11)
 
+ * New `optional()` constructor for nullable values
  * Better `wrap...` function names
 
 v2.0.0 (2019-10-23)

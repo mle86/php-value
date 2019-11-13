@@ -477,4 +477,26 @@ class ValueTest extends TestCase
             "Extended wrapper object is considered equal to zero by builtin== !");
     }
 
+    /**
+     * @depends testConstructor
+     * @depends testConstructorWithInstance
+     * @depends testInvalidInitializer
+     * @depends testValue
+     * @depends testRewrap
+     */
+    public function testOptionalConstructor()
+    {
+        $tw1 = TestWrapper4::optional('43001');
+        $this->assertSame('43001', $tw1->value());
+
+        $tw2 = TestWrapper4::optional($tw1);
+        $this->assertSame($tw1->value(), $tw2->value());
+
+        $tw3 = TestWrapper4::optional(null);
+        $this->assertNull($tw3);
+
+        $this->expectException(\InvalidArgumentException::class);
+        TestWrapper4::optional('x1x1x1x1x');
+    }
+
 }
