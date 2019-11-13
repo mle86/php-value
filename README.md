@@ -95,7 +95,7 @@ of external values without wrapping them in an instance.
   Valid values are stored in the new instance, invalid values cause an `InvalidArgumentException` to be thrown.
   Other instances of the same class are always considered valid (*re-wrapping*).
 
-* <code>public static function <b>isValid</b>($test\_value): bool</code>
+* <code>abstract public static function <b>isValid</b>($test\_value): bool</code>
 
   Checks the validity of a raw value.
   If it returns true, a new object can be instantiated with that value.

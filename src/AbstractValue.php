@@ -91,7 +91,6 @@ abstract class AbstractValue implements Value
      */
     public function __construct($rawValue)
     {
-
         if ($this->isSet) {
             throw new DoubleConstructorCallException("double constructor call is not allowed");
         }
