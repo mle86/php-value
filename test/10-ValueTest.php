@@ -406,6 +406,11 @@ class ValueTest extends TestCase
             $a['k1']->equals($orig_a['k1']) &&
             $a['k3']->equals($orig_a['k3'])),
             "wrapOrNullArray() did not wrap the correct values!");
+
+        $empty = [];
+        TestWrapper4::wrapOrNullArray($empty);
+        $this->assertSame([], $empty,
+            "wrapOrNullArray() did not handle empty array correctly!");
     }
 
 
