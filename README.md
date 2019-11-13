@@ -56,7 +56,7 @@ Or insert this into your project's `composer.json` file:
 
 ```json
 "require": {
-    "mle86/value": "^2.0.0"
+    "mle86/value": "^2"
 }
 ```
 
