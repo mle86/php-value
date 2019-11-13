@@ -1,3 +1,7 @@
+v1.2.0 (2019-11 -- backported from v2.1.0)
+
+* New `optional()` constructor for nullable values
+
 v1.1.2 (2019-10-23)
 * package cleanup
 

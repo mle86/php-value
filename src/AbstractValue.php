@@ -98,6 +98,22 @@ abstract class AbstractValue implements Value
         }
     }
 
+    /**
+     * Same as the default constructor,
+     * but also accepts `null` values (which will be returned unchanged).
+     *
+     * @param $rawValue
+     * @return static|null
+     */
+    public static function optional($rawValue)
+    {
+        if ($rawValue === null) {
+            return null;
+        }
+
+        return new static($rawValue);
+    }
+
 
     /** @noinspection PhpDocMissingThrowsInspection */
     /**
