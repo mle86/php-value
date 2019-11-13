@@ -1,4 +1,4 @@
-v2.1.0 (2019-11)
+v2.1.0 (2019-11-13)
 
  * New `optional()` constructor for nullable values
  * Better `wrap...` function names
