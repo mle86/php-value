@@ -136,7 +136,7 @@ abstract class AbstractValue implements Value
      * This method performs an equality check on other instances or raw values.
      * Objects are considered equal if and only if they are instances of the same
      * subclass and carry the same value().  All other values are considered equal
-     * if and only if they are identical (===) to the current objects's value().
+     * if and only if they are identical (===) to the current object's value().
      *
      * @param mixed|static $testValue
      * @return bool
