@@ -1,3 +1,8 @@
+v1.3.0 (2019-11 -- backported from v2.2.0)
+
+ * Improved unserialization
+    * Re-validate serialized value
+
 v1.2.0 (2019-11-13 -- backported from v2.1.0)
 
 * New `optional()` constructor for nullable values
