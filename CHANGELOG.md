@@ -1,4 +1,4 @@
-v2.2.0 (2019-11)
+v2.2.0 (2019-11-28)
 
  * Improved unserialization
     * Forward-compatibility to shorter PHP7.4 format
