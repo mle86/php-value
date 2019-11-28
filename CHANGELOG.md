@@ -1,4 +1,4 @@
-v1.3.0 (2019-11 -- backported from v2.2.0)
+v1.3.0 (2019-11-28 -- backported from v2.2.0)
 
  * Improved unserialization
     * Forward-compatibility to shorter PHP7.4 format
