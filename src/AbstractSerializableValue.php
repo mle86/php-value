@@ -6,6 +6,10 @@ namespace mle86\Value;
  * This extension of AbstractValue provides easy serializability
  * for the Value objects.  It implements the JsonSerializable interface.
  *
+ * Standard PHP serialization via {@see serialize}/{@see unserialize} is always supported.
+ * This class contains an extra {@see __wakeup} implementation
+ * to make sure that unserialized instances always contain a valid value.
+ *
  * @author Maximilian Eul
  * @link https://github.com/mle86/php-value
  */

@@ -149,6 +149,11 @@ of external values without wrapping them in an instance.
 This extension of `AbstractValue` provides easy serializability for the Value objects.
 It implements the [JsonSerializable](https://php.net/manual/class.jsonserializable.php) interface.
 
+Standard PHP serialization via [serialize](https://secure.php.net/serialize)/[unserialize](https://secure.php.net/unserialize)
+is always supported.
+This class contains an extra `__wakeup()` implementation
+to make sure that unserialized instances always contain a valid value.
+
 * <code>public function <b>\_\_toString</b>(): string</code>
 
   Returns the wrapped value like `value()`, but with an explicit
