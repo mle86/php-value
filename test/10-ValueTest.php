@@ -7,7 +7,6 @@ use mle86\Value\Tests\Helpers\ExtTestWrapper4;
 use mle86\Value\Tests\Helpers\TestWrapper4;
 use mle86\Value\Tests\Helpers\TestWrapper9;
 use mle86\Value\Value;
-use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -155,12 +154,16 @@ class ValueTest extends TestCase
     }
 
     /**
+     * This test ensures that our object instances are never considered equal to zero.
+     *
+     * This requires an implicit object-to-int cast which may causes a NOTICE
+     * depending on the error_reporting setting.
+     *
      * @depends testEquals
      */
     public function testBuiltinEqualsZero()
     {
-        $this->expectException(Error::class);
-        $this->assertFalse((self::$tw1 == 0 || 0 == self::$tw1),
+        $this->assertFalse(@(self::$tw1 == 0 || 0 == self::$tw1),
             "wrapper is considered equal to zero by builtin== !");
     }
 
@@ -472,8 +475,7 @@ class ValueTest extends TestCase
     {
         $ew->set_additional_property($additional_property);
 
-        $this->expectException(Error::class);
-        $this->assertFalse(($ew == 0 || 0 == $ew),
+        $this->assertFalse(@($ew == 0 || 0 == $ew),
             "Extended wrapper object is considered equal to zero by builtin== !");
     }
 

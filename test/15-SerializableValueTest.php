@@ -5,7 +5,6 @@ namespace mle86\Value\Tests;
 use mle86\Value\AbstractSerializableValue;
 use mle86\Value\Tests\Helpers\TestSWrapper6;
 use mle86\Value\Value;
-use PHPUnit\Framework\Error\Error;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -87,8 +86,7 @@ class SerializableValueTest extends TestCase
      */
     public function testBuiltinEqualsZero(AbstractSerializableValue $tw)
     {
-        $this->expectException(Error::class);
-        $this->assertFalse(($tw == 0),
+        $this->assertFalse(@($tw == 0),
             "serializable wrapper considered zero as ==equal !");
     }
 
