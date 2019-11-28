@@ -44,17 +44,37 @@ abstract class AbstractSerializableValue extends AbstractValue implements \JsonS
      * contains a value which is no longer considered valid.
      * That's why this method re-applies the {@see isValid} check.
      *
+     * This method also provides forward compatibility to the new PHP 7.4
+     * `__serialize`/`__unserialize` format we'll implement in v3.
+     * It is only called in a PHP7.3 (or older) environment
+     * as PHP 7.4+ ignores it if an __unserialize method is present.
+     *
      * @internal
      */
     public function __wakeup()
     {
+        if (isset($this->{'0'})) {
+            /* We're running PHP 7.3 or older and this instance was just unserialized
+             * from a serialization created with PHP 7.4+,
+             * which just contains [0 => $value].
+             * Luckily PHP 7.3's unserialize() can sort of handle that:
+             * it will write the value into a magic property called '0'.
+             * We'll just call the constructor (which hasn't happened yet)
+             * to run validation and to set $isSet.  */
+            $inputValue = $this->{'0'};
+            unset($this->{'0'});
+            $this->__construct($inputValue);
+            return;
+        }
+
         /*
-         * The serialization contained both $value and $isSet
+         * We're running PHP 7.3 or older and this instance was just unserialized
+         * from a serialization also created with PHP 7.3 or older.
+         * In this case, the serialization contained both $value and $isSet
          * and there's nothing left to assign.
          * But we'll still run the validation
          * just in case the serialized value is no longer considered valid.
          */
-
         $storedValue = $this->value();
         if (!static::isValid($storedValue)) {
             $storedValue = (is_string($storedValue) || is_int($storedValue) || is_float($storedValue))

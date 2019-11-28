@@ -3,6 +3,7 @@
 namespace mle86\Value\Tests;
 
 use mle86\Value\AbstractSerializableValue;
+use mle86\Value\AbstractValue;
 use mle86\Value\InvalidArgumentException;
 use mle86\Value\Tests\Helpers\TestSWrapper6;
 use mle86\Value\Value;
@@ -100,6 +101,10 @@ class SerializableValueTest extends TestCase
         $ser = serialize($tw);
         $this->assertNotEmpty($ser);
         return $ser;
+
+        # TODO: if we raise our PHP dependency to 7.4+
+        #  we can assume that $set came directly from the __serialize method;
+        #  that means we can assert that it doesn't contain the $isSet flag.
     }
 
     /**
@@ -145,6 +150,80 @@ class SerializableValueTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);  // !
         unserialize($invalidSerialization);
+    }
+
+    /**
+     * Ensures that the future PHP7.4 serialization format
+     * is already accepted (and correctly processed)
+     * by this version of the library.
+     *
+     * @depends testPhpUnserialize
+     * @depends testSerializedValueValidity
+     */
+    public function testUnserializationForwardCompatibility()
+    {
+        $twFqcn            = TestSWrapper6::class;
+        $twFqcnLen         = strlen($twFqcn);
+        $inputValue        = self::VALID_INPUT2;
+        $inputLen          = strlen($inputValue);
+        $invalidInputValue = self::INVALID_INPUT2;
+        $invalidInputLen   = strlen($inputValue);
+
+        $validPhp74Serialization =
+            "O:{$twFqcnLen}:\"{$twFqcn}\":1:{i:0;s:{$inputLen}:\"{$inputValue}\";}";
+        $invalidPhp74Serialization =
+            "O:{$twFqcnLen}:\"{$twFqcn}\":1:{i:0;s:{$invalidInputLen}:\"{$invalidInputValue}\";}";
+
+        /** @var TestSWrapper6 $unserializedObject */
+        $unserializedObject = unserialize($validPhp74Serialization);
+        $this->assertInstanceOf(TestSWrapper6::class, $unserializedObject,
+            "FC Unserialization returned object of wrong class!");
+        $this->assertEquals($inputValue, $unserializedObject->value(),
+            "FC Unserialized object has incorrect value!");
+
+        $this->expectException(InvalidArgumentException::class);
+        unserialize($invalidPhp74Serialization);
+    }
+
+    /**
+     * Ensures that the pre-PHP7.4 serialization format
+     * is still accepted and correctly processed,
+     * even if this library is being used within PHP 7.4+.
+     *
+     * @depends testPhpUnserialize
+     * @depends testSerializedValueValidity
+     */
+    public function testUnserializationBackwardCompatibility()
+    {
+        $twFqcn            = TestSWrapper6::class;
+        $twFqcnLen         = strlen($twFqcn);
+        $valVarName        = "\0" . AbstractValue::class . "\0" . 'value';
+        $valVarLen         = strlen($valVarName);
+        $setVarName        = "\0" . AbstractValue::class . "\0" . 'isSet';
+        $setVarLen         = strlen($valVarName);
+        $inputValue        = self::VALID_INPUT2;
+        $inputLen          = strlen($inputValue);
+        $invalidInputValue = self::INVALID_INPUT2;
+        $invalidInputLen   = strlen($inputValue);
+
+        $validPhp73Serialization =
+            "O:{$twFqcnLen}:\"{$twFqcn}\":2:{".
+            "s:{$valVarLen}:\"{$valVarName}\";s:{$inputLen}:\"{$inputValue}\";".
+            "s:{$setVarLen}:\"{$setVarName}\";b:1;}";
+        $invalidPhp73Serialization =
+            "O:{$twFqcnLen}:\"{$twFqcn}\":2:{".
+            "s:{$valVarLen}:\"{$valVarName}\";s:{$invalidInputLen}:\"{$invalidInputValue}\";".
+            "s:{$setVarLen}:\"{$setVarName}\";b:1;}";
+
+        /** @var TestSWrapper6 $unserializedObject */
+        $unserializedObject = unserialize($validPhp73Serialization);
+        $this->assertInstanceOf(TestSWrapper6::class, $unserializedObject,
+            "BC Unserialization returned object of wrong class!");
+        $this->assertEquals($inputValue, $unserializedObject->value(),
+            "BC Unserialized object has incorrect value!");
+
+        $this->expectException(InvalidArgumentException::class);
+        unserialize($invalidPhp73Serialization);
     }
 
 }

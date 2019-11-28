@@ -1,6 +1,7 @@
 v2.2.0 (2019-11)
 
  * Improved unserialization
+    * Forward-compatibility to shorter PHP7.4 format
     * Re-validate serialized value
     * Tests
 
