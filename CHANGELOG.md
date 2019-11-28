@@ -1,6 +1,8 @@
 v2.2.0 (2019-11)
 
- * Test serialization/unserialization
+ * Improved unserialization
+    * Re-validate serialized value
+    * Tests
 
 v2.1.0 (2019-11-13)
 

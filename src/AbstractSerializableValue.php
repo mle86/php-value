@@ -35,4 +35,33 @@ abstract class AbstractSerializableValue extends AbstractValue implements \JsonS
         return $this->value();
     }
 
+    /**
+     * This method ensures that unserialized instances are still valid.
+     *
+     * Serialization may be stored in databases for a long time;
+     * if the class definition changes in between,
+     * it's possible that a formerly-valid serialization
+     * contains a value which is no longer considered valid.
+     * That's why this method re-applies the {@see isValid} check.
+     *
+     * @internal
+     */
+    public function __wakeup()
+    {
+        /*
+         * The serialization contained both $value and $isSet
+         * and there's nothing left to assign.
+         * But we'll still run the validation
+         * just in case the serialized value is no longer considered valid.
+         */
+
+        $storedValue = $this->value();
+        if (!static::isValid($storedValue)) {
+            $storedValue = (is_string($storedValue) || is_int($storedValue) || is_float($storedValue))
+                ? "'{$storedValue}'"
+                : gettype($storedValue);
+            throw new InvalidArgumentException("not a valid serialized " . static::class . ": {$storedValue}");
+        }
+    }
+
 }
