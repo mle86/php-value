@@ -90,4 +90,32 @@ class SerializableValueTest extends TestCase
             "serializable wrapper considered zero as ==equal !");
     }
 
+    /**
+     * @depends testInstance
+     */
+    public function testPhpSerialize(AbstractSerializableValue $tw): string
+    {
+        $ser = serialize($tw);
+        $this->assertNotEmpty($ser);
+        return $ser;
+    }
+
+    /**
+     * @depends testPhpSerialize
+     * @depends testInstance
+     */
+    public function testPhpUnserialize(string $serialization, AbstractSerializableValue $orig)
+    {
+        /** @var AbstractSerializableValue $uns */
+        $uns = unserialize($serialization);
+
+        $this->assertSame(get_class($orig), get_class($uns),
+            "unserialize(serialize(ASV)) returned instance of a different class!");
+
+        $this->assertTrue($orig->equals($uns),
+            "Unserialized object doesn't equal the original object anymore!");
+        $this->assertTrue($uns->equals($orig),
+            "Original object doesn't equal an unserialized object anymore!");
+    }
+
 }

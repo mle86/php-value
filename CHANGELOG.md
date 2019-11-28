@@ -1,3 +1,7 @@
+v2.2.0 (2019-11)
+
+ * Test serialization/unserialization
+
 v2.1.0 (2019-11-13)
 
  * New `optional()` constructor for nullable values
