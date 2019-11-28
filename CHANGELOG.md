@@ -1,6 +1,7 @@
 v1.3.0 (2019-11 -- backported from v2.2.0)
 
  * Improved unserialization
+    * Forward-compatibility to shorter PHP7.4 format
     * Re-validate serialized value
 
 v1.2.0 (2019-11-13 -- backported from v2.1.0)
