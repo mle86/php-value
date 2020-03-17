@@ -1,4 +1,4 @@
-v1.3.1 (2020-03 -- backported from v2.1.0)
+v1.3.1 (2020-03-17 -- backported from v2.1.0)
 
  * Better `wrap...` function names
 
