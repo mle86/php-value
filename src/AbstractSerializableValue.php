@@ -9,6 +9,8 @@ namespace mle86\Value;
  * Standard PHP serialization via {@see serialize}/{@see unserialize} is always supported.
  * This class contains an extra {@see __wakeup} implementation
  * to make sure that unserialized instances always contain a valid value.
+ * It also contains implementations of the PHP 7.4 {@see __serialize} and {@see __unserialize} methods
+ * for a shorter serialization output format.
  *
  * @author Maximilian Eul
  * @link https://github.com/mle86/php-value
@@ -59,7 +61,7 @@ abstract class AbstractSerializableValue extends AbstractValue implements \JsonS
     {
         /*
          * This method must have an array return type.
-         * That array may be nested, associative, whatever.
+         * which needs to be "associative".
          * But it's just one value -- so the simplest form is, of course, [0 => $value].
          *
          * Don't change this format!
@@ -67,7 +69,7 @@ abstract class AbstractSerializableValue extends AbstractValue implements \JsonS
          * it might not be recognizable anymore.
          * Support for this format was added in v2.2.0 (see __wakeup).
          */
-        return [$this->value()];
+        return [0 => $this->value()];
     }
 
     /**
