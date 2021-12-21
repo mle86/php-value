@@ -34,6 +34,7 @@ abstract class AbstractSerializableValue extends AbstractValue implements \JsonS
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->value();
