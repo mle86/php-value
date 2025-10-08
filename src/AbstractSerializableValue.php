@@ -10,6 +10,9 @@ namespace mle86\Value;
  * This class contains an extra {@see __wakeup} implementation
  * to make sure that unserialized instances always contain a valid value.
  *
+ * @template T
+ * @extends AbstractValue<T>
+ *
  * @author Maximilian Eul
  * @link https://github.com/mle86/php-value
  */
@@ -32,7 +35,7 @@ abstract class AbstractSerializableValue extends AbstractValue implements \JsonS
      * Returns the wrapped value -- like {@see value()}.
      * This allows {@see json_encode()} to encode the object.
      *
-     * @return mixed
+     * @return T
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()

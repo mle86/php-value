@@ -11,6 +11,8 @@ namespace mle86\Value;
  * important requirement:  being immutable.  But we cannot encode that
  * in an interface.
  *
+ * @template T
+ *
  * @author Maximilian Eul
  * @link https://github.com/mle86/php-value
  */
@@ -18,12 +20,12 @@ interface Value
 {
 
     /**
-     * @param mixed|static $rawValue
+     * @param T|static|mixed $rawValue
      */
     public function __construct($rawValue);
 
     /**
-     * @return mixed
+     * @return T
      */
     public function value();
 

@@ -25,6 +25,9 @@ namespace mle86\Value;
  * Additional getters may be implemented in subclasses (e.g. for different
  * representations of the value).
  *
+ * @template T
+ * @implements Value<T>
+ *
  * @author Maximilian Eul
  * @link https://github.com/mle86/php-value
  */
@@ -40,7 +43,7 @@ abstract class AbstractValue implements Value
      * Always include an `if ($testValue instanceof static) { return true; }`
      * check, as already-wrapped values are always considered valid!
      *
-     * @param mixed|static $testValue
+     * @param T|static|mixed $testValue
      * @return bool
      */
     abstract public static function isValid($testValue): bool;
@@ -50,14 +53,14 @@ abstract class AbstractValue implements Value
      * This is the one value which this class wraps.
      * It must only be written to in the class constructor.
      *
-     * @var mixed
+     * @var T
      */
     private $value;
 
     /**
      * Returns the object's wrapped initializer value.
      *
-     * @return mixed
+     * @return T
      */
     final public function value()
     {
@@ -86,7 +89,7 @@ abstract class AbstractValue implements Value
      * Since subclasses cannot directly access the $value property,
      * they should always call this superconstructor to do the assignment.
      *
-     * @param mixed|static $rawValue
+     * @param T|static|mixed $rawValue
      * @throws InvalidArgumentException
      */
     public function __construct($rawValue)
@@ -117,7 +120,7 @@ abstract class AbstractValue implements Value
      * Same as the default constructor,
      * but also accepts `null` values (which will be returned unchanged).
      *
-     * @param mixed $rawValue
+     * @param T|static|mixed|null $rawValue
      * @return static|null
      */
     public static function optional($rawValue)
@@ -138,7 +141,7 @@ abstract class AbstractValue implements Value
      * subclass and carry the same value().  All other values are considered equal
      * if and only if they are identical (===) to the current object's value().
      *
-     * @param mixed|static $testValue
+     * @param T|static|mixed $testValue
      * @return bool
      */
     final public function equals($testValue): bool
@@ -160,7 +163,7 @@ abstract class AbstractValue implements Value
      * an InvalidArgumentException if the input value fails the subclass'
      * isValid check.  If the value already is an instance, it won't be replaced.
      *
-     * @param mixed|static $value
+     * @param T|static|mixed $value
      * @return static
      */
     final public static function wrap(&$value)
@@ -177,7 +180,7 @@ abstract class AbstractValue implements Value
     /**
      * Like {@see wrap}, but won't change `null` values.
      *
-     * @param mixed|static|null $value
+     * @param T|static|mixed|null $value
      * @return static|null
      */
     final public static function wrapOptional(&$value)
@@ -222,7 +225,7 @@ abstract class AbstractValue implements Value
      * (It also returns the altered array.)
      * Array keys will be preserved.
      *
-     * @param array<static|mixed|null> $array
+     * @param array<T|static|mixed|null> $array
      * @return array<static|null>
      */
     final public static function wrapOptionalsArray(array &$array): array
@@ -265,7 +268,7 @@ abstract class AbstractValue implements Value
 
     /**
      * @deprecated Use {@see wrapOptional} instead.
-     * @param mixed|static|null $value
+     * @param T|static|mixed|null $value
      * @return static|null
      */
     final public static function wrapOrNull(&$value)
@@ -275,7 +278,7 @@ abstract class AbstractValue implements Value
 
     /**
      * @deprecated Use {@see wrapOptionalsArray} instead.
-     * @param array<static|mixed|null> $array
+     * @param array<T|static|mixed|null> $array
      * @return array<static|null>
      */
     final public static function wrapOrNullArray(array &$array): array
