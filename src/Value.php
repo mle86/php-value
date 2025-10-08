@@ -17,8 +17,14 @@ namespace mle86\Value;
 interface Value
 {
 
+    /**
+     * @param mixed|static $rawValue
+     */
     public function __construct($rawValue);
 
+    /**
+     * @return mixed
+     */
     public function value();
 
 }

@@ -117,7 +117,7 @@ abstract class AbstractValue implements Value
      * Same as the default constructor,
      * but also accepts `null` values (which will be returned unchanged).
      *
-     * @param $rawValue
+     * @param mixed $rawValue
      * @return static|null
      */
     public static function optional($rawValue)
@@ -196,7 +196,7 @@ abstract class AbstractValue implements Value
      * (It also returns the altered array.)
      * Array keys will be preserved.
      *
-     * @param mixed[]|static[] $array
+     * @param array<static|mixed> $array
      * @return static[]
      */
     final public static function wrapArray(array &$array): array
@@ -222,8 +222,8 @@ abstract class AbstractValue implements Value
      * (It also returns the altered array.)
      * Array keys will be preserved.
      *
-     * @param mixed[]|static[]|null[] $array
-     * @return static[]|null[]
+     * @param array<static|mixed|null> $array
+     * @return array<static|null>
      */
     final public static function wrapOptionalsArray(array &$array): array
     {
@@ -254,6 +254,7 @@ abstract class AbstractValue implements Value
      * @throws NoMagicPropertiesException  (always)
      * @internal
      */
+    // @phpstan-ignore missingType.parameter, missingType.parameter
     final public function __set($name, $value)
     {
         throw new NoMagicPropertiesException("immutable objects cannot have magic properties");
@@ -274,8 +275,8 @@ abstract class AbstractValue implements Value
 
     /**
      * @deprecated Use {@see wrapOptionalsArray} instead.
-     * @param mixed[]|static[]|null[] $array
-     * @return static[]|null[]
+     * @param array<static|mixed|null> $array
+     * @return array<static|null>
      */
     final public static function wrapOrNullArray(array &$array): array
     {
